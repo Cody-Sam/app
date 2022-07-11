@@ -18,6 +18,7 @@ function App() {
             <GlowCard />
             <GlowCard />
             <GlowCard />
+            <GlowCard />
           </ContentWrapper>
         </div>
     </div>
