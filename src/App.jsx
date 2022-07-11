@@ -1,20 +1,27 @@
-import { useState } from 'react'
-import logo from './logo.svg'
-import tw from 'twin.macro'
-import "./index.css"
+import { useState } from "react";
+import tw from "twin.macro";
+import "./index.css";
+
+import GlowCard from "./components/GlowCard.jsx";
+import Sidebar from "./components/Sidebar";
+import ContentWrapper from "./components/ContentWrapper.jsx";
+
 
 function App() {
+  let [sidebarOpen, setSidebarOpen] = useState(true);
   return (
-    <div className="App bg-slate-900 h-screen" >
-      <header className="App-header">
-        <img src={logo} className="App-logo w-1/2" alt="logo" />
-        <p>Hello Vite + React!</p>
-        <p>
-          Edit <code>App.jsx</code> and save to test HMR updates.
-        </p>
-      </header>
+    <div className="relative min-h-screen text-white">
+        <div className="relative flex h-screen bg-black">
+          <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
+          <ContentWrapper>
+            <GlowCard />
+            <GlowCard />
+            <GlowCard />
+            <GlowCard />
+          </ContentWrapper>
+        </div>
     </div>
-  )
+  );
 }
 
-export default App
+export default App;
