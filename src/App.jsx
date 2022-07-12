@@ -1,4 +1,4 @@
-import { useState, useReducer } from "react";
+import { useState, useEffect, useReducer } from "react";
 import { Outlet, Link } from "react-router-dom";
 import tw from "twin.macro";
 import "./index.css";
@@ -7,26 +7,27 @@ import Sidebar from "./components/Sidebar";
 import ContentWrapper from "./components/ContentWrapper.jsx";
 import { UserContext, userReducer } from "./modules/User";
 
-function getUserFromSession() {
-  let token = sessionStorage.getItem("token");
-  if (token) {
-    const fetchUser = async () => {
-      const res = await fetch("http://localhost:4000/api/v1/users/me", {
-        headers: { authorization: "Bearer " + token },
-      });
-      const data = res.json();
-      return data;
-    };
-    const user = fetchUser();
-    return { user, token };
-  }
-  return { user: null, token: null };
-}
-
 function App() {
   let [sidebarOpen, setSidebarOpen] = useState(false);
-  
-  const [userStore, userDispatch] = useReducer(userReducer, getUserFromSession());
+  const [userStore, userDispatch] = useReducer(userReducer, {
+    user: null,
+    token: null,
+  });
+
+  useEffect(() => {
+    const fetchUser = async () => {
+      let token = sessionStorage.getItem("token");
+      if (token) {
+        const res = await fetch("http://localhost:4000/api/v1/users/me", {
+          headers: { authorization: "Bearer " + token },
+        });
+        const user = await res.json();
+        userDispatch({ type: "login", data: { user, token } });
+      }
+    };
+    fetchUser();
+  }, []);
+
   return (
     <div className="relative min-h-screen text-white">
       <div className="relative flex h-screen bg-black">
