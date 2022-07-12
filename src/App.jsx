@@ -7,15 +7,30 @@ import Sidebar from "./components/Sidebar";
 import ContentWrapper from "./components/ContentWrapper.jsx";
 import { UserContext, userReducer } from "./modules/User";
 
+function getUserFromSession() {
+  let token = sessionStorage.getItem("token");
+  if (token) {
+    const fetchUser = async () => {
+      const res = await fetch("http://localhost:4000/api/v1/users/me", {
+        headers: { authorization: "Bearer " + token },
+      });
+      const data = res.json();
+      return data;
+    };
+    const user = fetchUser();
+    return { user, token };
+  }
+  return { user: null, token: null };
+}
 
 function App() {
   let [sidebarOpen, setSidebarOpen] = useState(false);
-  let initialUserState = {user:null, token:null};
-  const [userStore, userDispatch] = useReducer(userReducer, initialUserState)
+  
+  const [userStore, userDispatch] = useReducer(userReducer, getUserFromSession());
   return (
     <div className="relative min-h-screen text-white">
       <div className="relative flex h-screen bg-black">
-        <UserContext.Provider value={{ userStore, userDispatch }} >
+        <UserContext.Provider value={{ userStore, userDispatch }}>
           <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           <ContentWrapper>
             <Outlet />
