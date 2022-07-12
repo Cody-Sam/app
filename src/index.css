@@ -6,7 +6,7 @@
 
 @font-face {
   font-family: "Neon Future";
-  src: url("./neon_future.ttf");
+  src: url("./fonts/neon_future.ttf");
 }
 
 @layer components {
