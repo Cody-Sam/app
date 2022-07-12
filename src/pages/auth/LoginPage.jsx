@@ -4,9 +4,7 @@ import { UserContext } from "../../modules/User";
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const {userStore, userDispatch} = useContext(UserContext)
-  let user = userStore.user
-  let token = userStore.token
+  const {userStore:{user, token}, userDispatch} = useContext(UserContext)
 
   async function login(event){
     event.preventDefault();
