@@ -17,10 +17,9 @@ function LoginPage() {
       body: JSON.stringify(credentials),
     });
     const data = await res.json();
-    const user = { id: data._id, name: data.name, email: data.email };
     userDispatch({
       type: "login",
-      data:{user:user, token: data.token}
+      data:{user:data.user, token: data.token}
     })
   };
 
