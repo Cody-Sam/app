@@ -1,8 +1,8 @@
 import { useState } from "react";
+import {Outlet, Link} from "react-router-dom"
 import tw from "twin.macro";
 import "./index.css";
 
-import GlowCard from "./components/GlowCard.jsx";
 import Sidebar from "./components/Sidebar";
 import ContentWrapper from "./components/ContentWrapper.jsx";
 
@@ -14,11 +14,7 @@ function App() {
         <div className="relative flex h-screen bg-black">
           <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
           <ContentWrapper>
-            <GlowCard />
-            <GlowCard />
-            <GlowCard />
-            <GlowCard />
-            <GlowCard />
+            <Outlet />
           </ContentWrapper>
         </div>
     </div>
