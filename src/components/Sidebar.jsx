@@ -76,9 +76,9 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
           <MenuItem name="Orders" path="orders">
             <CgList size="2em" />
           </MenuItem>
-          <MenuLogOut>
+          {userStore.user && (<MenuLogOut>
             <CgLogOut size="2em" />
-          </MenuLogOut>
+          </MenuLogOut>)}
         </div>
       </div>
     </div>
