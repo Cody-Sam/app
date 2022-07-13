@@ -10,8 +10,7 @@ import { UserContext, userReducer } from "./modules/User";
 function App() {
   let [sidebarOpen, setSidebarOpen] = useState(false);
   const [userStore, userDispatch] = useReducer(userReducer, {
-    user: null,
-    token: null,
+    undefined: true
   });
 
   useEffect(() => {
