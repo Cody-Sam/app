@@ -41,7 +41,17 @@ function LoginPage() {
     }
   }
 
-  function LoginForm() {
+  if (token) {
+    if (status === "authorising") {
+      return (
+        <div className="flex flex-wrap gap-24 items-start justify-center py-8">
+          <GlowCard>Validating Account</GlowCard>
+        </div>
+      );
+    } else if (status === "authorised") {
+      return <Navigate to="/account" />;
+    }
+  } else {
     return (
       <div className="flex flex-wrap gap-24 items-start justify-center py-8">
         <div className="w-full flex-col px-2">
@@ -98,25 +108,11 @@ function LoginPage() {
             )}
           </form>
           <div className="text-center">
-            <Link to="/auth/signup/">Sign Up</Link> | Forgot Password
+            <Link to="/auth/register/">Register</Link> | Forgot Password
           </div>
         </div>
       </div>
     );
-  }
-
-  if (token) {
-    if (status === "authorising") {
-      return (
-        <div className="flex flex-wrap gap-24 items-start justify-center py-8">
-          <GlowCard>Validating Account</GlowCard>
-        </div>
-      );
-    } else if (status === "authorised") {
-      return <Navigate to="/account" />;
-    }
-  } else {
-    return <LoginForm />;
   }
 }
 
