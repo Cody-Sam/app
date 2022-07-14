@@ -13,7 +13,7 @@ import AccountIndex from "./pages/account/AccountIndex";
 import ShopIndex from "./pages/shop/ShopIndex";
 import OrdersIndex from "./pages/orders/OrdersIndex";
 import LoginPage from "./pages/auth/LoginPage";
-import SignUpPage from "./pages/auth/SignUpPage";
+import RegisterPage from "./pages/auth/RegisterPage";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -27,7 +27,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="auth">
             <Route index element={<Navigate to="login" />} />
             <Route path="login" element={<LoginPage />}/>
-            <Route path="signup" element={<SignUpPage />} />
+            <Route path="register" element={<RegisterPage />} />
           </Route>
         </Route>
       </Routes>
