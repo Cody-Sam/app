@@ -10,13 +10,16 @@ import { UserContext, userReducer } from "./modules/User";
 function App() {
   let [sidebarOpen, setSidebarOpen] = useState(false);
   const [userStore, userDispatch] = useReducer(userReducer, {
-    undefined: true
+    status:"noUser",
+    user: null,
+    token: sessionStorage.getItem("token")
   });
-
+  
   useEffect(() => {
     const fetchUser = async () => {
-      let token = sessionStorage.getItem("token");
+      let token = userStore.token;
       if (token) {
+        userDispatch({type:"setStatus", data:{status:"authorising"}})
         const res = await fetch("http://localhost:4000/api/v1/users/me", {
           headers: { authorization: "Bearer " + token },
         });
