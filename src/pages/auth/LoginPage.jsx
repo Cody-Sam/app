@@ -1,11 +1,14 @@
 import { useState, useContext } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { UserContext } from "../../modules/User";
+import GlowCard from "../../components/GlowCard";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
-  const [formState, setFormState] = useState({ errors: null });
+  const [formState, setFormState] = useState({
+    errors: { form: null, email: null, password: null },
+  });
   const navigate = useNavigate();
   const {
     userStore: { user, token },
@@ -23,7 +26,6 @@ function LoginPage() {
     const data = await res.json();
     switch (res.status) {
       case 201:
-        console.log("login successful");
         userDispatch({
           type: "login",
           data: { user: data.user, token: data.token },
@@ -35,7 +37,6 @@ function LoginPage() {
           ...formState,
           errors: { form: "Invalid Login Data", email: "*", password: "*" },
         });
-        console.log(formState);
         break;
     }
   }
@@ -43,44 +44,64 @@ function LoginPage() {
     return <></>;
   } else {
     if (user) {
-      return (<Navigate to="/account" />);
+      return <Navigate to="/account" />;
     } else {
       return (
         <div className="flex flex-wrap gap-24 items-start justify-center py-8">
-          <div className="bg-slate-600 w-full max-w-md mx-4 flex-col p-4">
-            <div className="text-center">Login</div>
-            <form
-              className="text-white flex flex-wrap"
-              onSubmit={(event) => login(event)}
-            >
-              <label htmlFor="email" className="w-full">
-                email:
-              </label>
-              <input
-                className="w-full bg-black"
-                type="text"
-                name="email"
-                value={email}
-                placeholder="your-email@example.com"
-                onChange={(event) => {
-                  setEmail(" ");
-                  setEmail(event.target.value);
-                }}
-              ></input>
+          <GlowCard classProp="">
+            <div className="w-full flex-col">
+              <div className="text-center">Login</div>
+              <form
+                className="text-white flex flex-wrap"
+                onSubmit={(event) => login(event)}
+              >
+                <label htmlFor="email" className="w-full mx-2">
+                  email:
+                  <span className="text-red-500">
+                    {formState.errors.email && formState.errors.email}
+                  </span>
+                </label>
+                <input
+                  className={`w-full bg-black mx-2 px-2 ring ${
+                    formState.errors.email && "ring-red-500"
+                  }`}
+                  type="text"
+                  name="email"
+                  value={email}
+                  placeholder="your-email@example.com"
+                  onChange={(event) => {
+                    setEmail(" ");
+                    setEmail(event.target.value);
+                  }}
+                ></input>
 
-              <label htmlFor="password" className="">
-                password:
-              </label>
-              <input
-                className="bg-black w-full"
-                type="password"
-                name="password"
-                value={password}
-                onChange={(event) => setPassword(event.target.value)}
-              ></input>
-              <input type="submit" value="Login" />
-            </form>
-          </div>
+                <label htmlFor="password" className="mt-4 mx-2">
+                  password:
+                  <span className="text-red-500">
+                    {formState.errors.password && formState.errors.password}
+                  </span>
+                </label>
+                <input
+                  className={`w-full bg-black mx-2 px-2 ring ${
+                    formState.errors.password && "ring-red-500"
+                  }`}
+                  type="password"
+                  name="password"
+                  value={password}
+                  onChange={(event) => setPassword(event.target.value)}
+                ></input>
+
+                <input
+                  type="submit"
+                  value="Login"
+                  className="bg-gray-800 border px-2 rounded mx-2 my-4 ring"
+                />
+                {formState.errors.form && <p className="my-auto bg-gray-900 text-red-500 border-red-500 border px-2">
+                  {formState.errors.form}
+                </p>}
+              </form>
+            </div>
+          </GlowCard>
         </div>
       );
     }

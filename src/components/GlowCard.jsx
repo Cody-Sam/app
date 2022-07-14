@@ -1,8 +1,9 @@
 function GlowCard({ children }) {
   return (
-    <div className="flex relative w-3/4 h-48">
+    <div className={"flex relative max-w-md w-full mx-4 h-48"}>
       <div className="absolute z-10 w-full h-full flex justify-center items-center bg-black overflow-hidden">
-        {children}
+        <div className="z-30">{children}</div>
+
         <div className="absolute left-0 h-full w-4 skew-x-[45deg] bg-gray-500"></div>
         <div className="absolute -left-8 h-full w-4 skew-x-[45deg] bg-gray-500"></div>
       </div>
