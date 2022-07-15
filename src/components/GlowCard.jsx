@@ -1,4 +1,4 @@
-function GlowCard({height=48, children }) {
+function GlowCard({ height = 48, children }) {
   return (
     <div className={`flex relative max-w-md w-full mx-4 h-${height}`}>
       <div className="absolute z-10 w-full h-full flex justify-center items-center bg-black overflow-hidden">
