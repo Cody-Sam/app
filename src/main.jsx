@@ -14,6 +14,9 @@ import ShopIndex from "./pages/shop/ShopIndex";
 import OrdersIndex from "./pages/orders/OrdersIndex";
 import LoginPage from "./pages/auth/LoginPage";
 import SignUpPage from "./pages/auth/SignUpPage";
+import Checkout from "./pages/checkout/Checkout";
+import PaymentSuccessPage from "./pages/checkout/PaymentSuccessPage";
+import PaymentFailurePage from "./pages/checkout/PaymentFailurePage";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -24,6 +27,9 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="account" element={<AccountIndex />} />
           <Route path="shop" element={<ShopIndex />} />
           <Route path="orders" element={<OrdersIndex />} />
+          <Route path="checkout" element={<Checkout />} />
+          <Route path="success" element={<PaymentSuccessPage />} />
+          <Route path="failure" element={<PaymentFailurePage />} />
           <Route path="auth">
             <Route index element={<Navigate to="login" />} />
             <Route path="login" element={<LoginPage />}/>
