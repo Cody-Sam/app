@@ -3,9 +3,10 @@ import { Navigate, useNavigate, Link } from "react-router-dom";
 import GlowCard from "../../components/GlowCard";
 import { UserContext } from "../../modules/User";
 
-function LoginPage() {
+function RegisterPage() {
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [fullName, setFullName] = useState("");
   const [formState, setFormState] = useState({
     errors: { form: null, email: null, password: null },
   });
@@ -15,13 +16,18 @@ function LoginPage() {
     userDispatch,
   } = useContext(UserContext);
 
-  async function login(event) {
+  async function register(event) {
     event.preventDefault();
-    const credentials = { email: email, password: password };
-    const res = await fetch("http://localhost:4000/api/v1/users/login", {
+    const newUser = {
+      name: fullName,
+      email: email,
+      password: password,
+      admin: true
+    };
+    const res = await fetch("http://localhost:4000/api/v1/users/", {
       method: "POST",
       headers: { "Content-Type": "application/json" },
-      body: JSON.stringify(credentials),
+      body: JSON.stringify(newUser),
     });
     const data = await res.json();
     switch (res.status) {
@@ -35,7 +41,7 @@ function LoginPage() {
       default:
         setFormState({
           ...formState,
-          errors: { form: "Invalid Login Data", email: "*", password: "*" },
+          errors: { form: data.message, email: "*", password: "*" },
         });
         break;
     }
@@ -55,13 +61,31 @@ function LoginPage() {
     return (
       <div className="flex flex-wrap gap-24 items-start justify-center py-8">
         <div className="w-full flex-col px-2">
-          <div className="text-center">Login</div>
+          <div className="text-center">Register an Account</div>
           <form
             className="text-white flex flex-wrap"
-            onSubmit={(event) => login(event)}
+            onSubmit={(event) => register(event)}
           >
             <label htmlFor="email" className="w-full mx-2">
-              email:
+              Full Name:
+              <span className="text-red-500">
+                {formState.errors.fullName && formState.errors.fullName}
+              </span>
+            </label>
+            <input
+              className={`w-full bg-black mx-2 px-2 ring rounded ${
+                formState.errors.email && "ring-red-500"
+              }`}
+              type="text"
+              name="fullName"
+              value={fullName}
+              placeholder="Your Name"
+              onChange={(event) => {
+                setFullName(event.target.value);
+              }}
+            ></input>
+            <label htmlFor="email" className="w-full mt-4 mx-2">
+              Email:
               <span className="text-red-500">
                 {formState.errors.email && formState.errors.email}
               </span>
@@ -75,13 +99,13 @@ function LoginPage() {
               value={email}
               placeholder="your-email@example.com"
               onChange={(event) => {
-                setEmail(" ");
+                // setEmail(" ");
                 setEmail(event.target.value);
               }}
             ></input>
 
             <label htmlFor="password" className="mt-4 mx-2">
-              password:
+              Password:
               <span className="text-red-500">
                 {formState.errors.password && formState.errors.password}
               </span>
@@ -98,7 +122,7 @@ function LoginPage() {
 
             <input
               type="submit"
-              value="Login"
+              value="Register"
               className="bg-gray-800 border px-2 rounded mx-2 my-4 ring"
             />
             {formState.errors.form && (
@@ -108,12 +132,11 @@ function LoginPage() {
             )}
           </form>
           <div className="text-center">
-            <Link to="/auth/register/">Register</Link> | Forgot Password
+            <Link to="/auth/login/">Log In</Link> | Forgot Password
           </div>
         </div>
       </div>
     );
   }
 }
-
-export default LoginPage;
+export default RegisterPage;

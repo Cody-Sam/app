@@ -3,11 +3,25 @@ import GlowCard from "../../components/GlowCard";
 function OrdersIndex() {
   return (
     <div className="flex flex-wrap gap-24 items-start justify-center py-8">
-      <GlowCard header="This is a list of your orders" />
-      <GlowCard header="track shipping or something" />
-      <GlowCard header="These are only here" />
-      <GlowCard header="To demonstrate" />
-      <GlowCard header="page scrolling" />
+      <GlowCard>
+        <h1 className="text-4xl z-20 text-center">
+          This is a list of your orders
+        </h1>
+      </GlowCard>
+      <GlowCard>
+        <h1 className="text-4xl z-20 text-center">
+          track shipping or something
+        </h1>
+      </GlowCard>
+      <GlowCard>
+        <h1 className="text-4xl z-20 text-center">These are only here</h1>
+      </GlowCard>
+      <GlowCard>
+        <h1 className="text-4xl z-20 text-center"> To demonstrate </h1>
+      </GlowCard>
+      <GlowCard>
+        <h1 className="text-4xl z-20 text-center"> page scrolling</h1>
+      </GlowCard>
     </div>
   );
 }
