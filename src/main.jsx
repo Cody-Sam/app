@@ -14,10 +14,10 @@ import ShopIndex from "./pages/shop/ShopIndex";
 import ShopItemPage from "./pages/shop/ShopItemPage";
 import OrdersIndex from "./pages/orders/OrdersIndex";
 import LoginPage from "./pages/auth/LoginPage";
-import SignUpPage from "./pages/auth/SignUpPage";
+import RegisterPage from "./pages/auth/RegisterPage";
 import Checkout from "./pages/checkout/Checkout";
 import PaymentSuccessPage from "./pages/checkout/PaymentSuccessPage";
-import RegisterPage from "./pages/auth/RegisterPage";
+import PaymentFailurePage from "./pages/checkout/PaymentFailurePage";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
