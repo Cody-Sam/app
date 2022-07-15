@@ -32,7 +32,9 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
       <div className={`flex w-full`}>
         <button
           onClick={() => {
-            userDispatch({ type: "logout" });
+            if (window.confirm("Are you sure you want to log out?")) {
+              userDispatch({ type: "logout" });
+            }
           }}
         >
           {children}
