@@ -1,16 +1,18 @@
 import { useContext } from "react";
 import { NavLink } from "react-router-dom";
 import {
-  CgMenuGridR,
-  CgShoppingCart,
-  CgUser,
-  CgList,
-  CgLogOut,
-} from "react-icons/cg";
-import {UserContext} from "/src/modules/User"
+  MdMenu,
+  MdMenuOpen,
+  MdStore,
+  MdAccountBox,
+  MdShoppingCart,
+  MdReceipt,
+  MdLogout,
+} from "react-icons/md";
+import { UserContext } from "/src/modules/User";
 
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
-  const {userStore,userDispatch} = useContext(UserContext)
+  const { userStore, userDispatch } = useContext(UserContext);
   function MenuItem({ name, children, path }) {
     return (
       <div className={`flex w-full`}>
@@ -30,7 +32,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
       <div className={`flex w-full`}>
         <button
           onClick={() => {
-            userDispatch({ type:"logout"})
+            userDispatch({ type: "logout" });
           }}
         >
           {children}
@@ -48,7 +50,11 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
             setSidebarOpen(!sidebarOpen);
           }}
         >
-          <CgMenuGridR size={"3rem"} />
+          {sidebarOpen ? (
+            <MdMenuOpen size={"3rem"} />
+          ) : (
+            <MdMenu size={"3rem"} />
+          )}
         </button>
         {sidebarOpen && (
           <NavLink to="/" className="my-auto">
@@ -68,17 +74,22 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
         <SidebarToggle />
         <div className={`flex flex-wrap content-start px-2 pt-4 gap-4`}>
           <MenuItem name="Account" path="account">
-            <CgUser size="2em" />
+            <MdAccountBox size="2em" />
           </MenuItem>
           <MenuItem name="Shop" path="shop">
-            <CgShoppingCart size="2em" />
+            <MdStore size="2em" />
+          </MenuItem>
+          <MenuItem name="Shopping Cart" path="cart">
+            <MdShoppingCart size="2em" />
           </MenuItem>
           <MenuItem name="Orders" path="orders">
-            <CgList size="2em" />
+            <MdReceipt size="2em" />
           </MenuItem>
-          {userStore.user && (<MenuLogOut>
-            <CgLogOut size="2em" />
-          </MenuLogOut>)}
+          {userStore.user && (
+            <MenuLogOut>
+              <MdLogout size="2em" />
+            </MenuLogOut>
+          )}
         </div>
       </div>
     </div>
