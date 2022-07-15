@@ -11,6 +11,7 @@ import App from "./App";
 import IndexPage from "./pages/IndexPage";
 import AccountIndex from "./pages/account/AccountIndex";
 import ShopIndex from "./pages/shop/ShopIndex";
+import ShopItemPage from "./pages/shop/ShopItemPage";
 import OrdersIndex from "./pages/orders/OrdersIndex";
 import LoginPage from "./pages/auth/LoginPage";
 import SignUpPage from "./pages/auth/SignUpPage";
@@ -22,7 +23,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
         <Route path="/" element={<App />}>
           <Route index element={<IndexPage />} />
           <Route path="account" element={<AccountIndex />} />
-          <Route path="shop" element={<ShopIndex />} />
+          <Route path="shop" >
+            <Route index element={<ShopIndex />}/>
+            <Route path="item/:item" element={<ShopItemPage />}/>
+          </Route>
           <Route path="orders" element={<OrdersIndex />} />
           <Route path="auth">
             <Route index element={<Navigate to="login" />} />
