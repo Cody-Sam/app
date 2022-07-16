@@ -8,41 +8,50 @@ import GlobalStyles from "./styles/GlobalStyles";
 
 // app imports
 import App from "./App";
-import IndexPage from "./pages/IndexPage";
-import Account from "./pages/account";
-import Auth from "./pages/auth";
-import Checkout from "./pages/checkout";
-import ShopIndex from "./pages/shop/ShopIndex";
-import ShopItemPage from "./pages/shop/ShopItemPage";
-import OrdersIndex from "./pages/orders/OrdersIndex";
+
+//Page Imports
+import Index, {Account, Auth, Cart, Orders, Shop} from "./pages"
+const Checkout = Cart.Checkout; 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
         <Route path="/" element={<App />}>
-          <Route index element={<IndexPage />} />
+          {/* App Index */}
+          <Route index element={<Index />} />
+
+          {/* Account Routes */}
           <Route path="account" element={<Account />} />
-          <Route path="shop">
-            <Route index element={<ShopIndex />} />
-            <Route path="item/:item" element={<ShopItemPage />} />
+
+          {/* Auth Routes */}
+          <Route path="auth">
+            <Route index element={<Navigate to="login" />} />
+            <Route path="login" element={<Auth.Login />} />
+            <Route path="register" element={<Auth.Register />} />
           </Route>
-          <Route path="orders" element={<OrdersIndex />} />
+
+          {/* Cart And Checkout Routes */}
           <Route path="cart">
-            <Route index element={<CartIndex />} />
+            <Route index element={<Cart />} />
             <Route path="checkout">
               <Route index element={<Checkout />} />
-              <Route path="success" element={<PaymentSuccessPage />} />
-              <Route path="failure" element={<PaymentFailurePage />} />
+              <Route path="success" element={<Checkout.Success />} />
+              <Route path="failure" element={<Checkout.Failure />} />
             </Route>
           </Route>
 
-          <Route path="auth">
-            <Route index element={<Navigate to="login" />} />
-            <Route path="login" element={<LoginPage />} />
-            <Route path="register" element={<RegisterPage />} />
+          {/* Orders Routes */}
+          <Route path="orders" element={<Orders />} />
+
+          {/* Shop Routes */}
+          <Route path="shop">
+            <Route index element={<Shop />} />
+            <Route path="item/:item" element={<Shop.Item />} />
           </Route>
         </Route>
+
+        {/* End Of Routes */}
       </Routes>
     </BrowserRouter>
   </React.StrictMode>
