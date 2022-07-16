@@ -35,9 +35,9 @@ function App() {
       <div className="relative flex h-screen bg-black">
         <UserContext.Provider value={{ userStore, userDispatch }}>
           <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-          <ContentWrapper>
+          <ContentWrapper.Page>
             <Outlet />
-          </ContentWrapper>
+          </ContentWrapper.Page>
         </UserContext.Provider>
       </div>
     </div>
