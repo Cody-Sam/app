@@ -13,30 +13,21 @@ function AccountIndex() {
     if (!user) {
       return (
         <div className="flex flex-wrap gap-24 items-start justify-center py-8">
-          <GlowCard>
+          {/* <GlowCard> */}
             <p>validating account</p>
-          </GlowCard>
+          {/* </GlowCard> */}
         </div>
       );
     } else {
       return (
         <div className="flex flex-wrap gap-24 items-start justify-center py-8">
           <GlowCard>
-            <h1 className="text-4xl z-20 text-center">
-              This is your account page{" "}
-            </h1>
-          </GlowCard>
-          <GlowCard>
-            <h1 className="text-4xl z-20 text-center">Change your deets</h1>{" "}
-          </GlowCard>
-          <GlowCard>
-            <h1 className="text-4xl z-20 text-center">These are only here</h1>{" "}
-          </GlowCard>
-          <GlowCard>
-            <h1 className="text-4xl z-20 text-center">To demonstrate</h1>
-          </GlowCard>
-          <GlowCard>
-            <h1 className="text-4xl z-20 text-center">page scrolling </h1>
+            {/* <GlowCard.Header /> */}
+            <GlowCard.Body>
+              <h1 className="text-4xl z-20 text-center">
+                This is your account page
+              </h1>
+            </GlowCard.Body>
           </GlowCard>
         </div>
       );
