@@ -1,6 +1,5 @@
-import React from "react";
-
 function Card({ children }) {
+  children = typeof children === 'object' ? [children] : children
   const header =
     children.find((child) => child.type.displayName === "header") || null;
   const body =
@@ -9,8 +8,6 @@ function Card({ children }) {
     children.find((child) => child.type.displayName === "footer") || null;
   const media =
     children.find((child) => child.type.displayName === "media") || null;
-  console.log(children);
-  console.log(React.Children);
 
   return (
     <div className="bg-black ring ring-white rounded-lg flex flex-col md:flex-row overflow-hidden">
@@ -43,7 +40,12 @@ Footer.displayName = "footer";
 Card.Footer = Footer;
 
 function Media({ src }) {
-  return <img src={src} className="inset-0 h-full w-full object-cover object-center" />;
+  return (
+    <img
+      src={src}
+      className="inset-0 h-full w-full object-cover object-center"
+    />
+  );
 }
 Media.displayName = "media";
 Card.Media = Media;
