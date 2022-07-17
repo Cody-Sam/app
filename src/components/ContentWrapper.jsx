@@ -18,4 +18,13 @@ function GridWrapper({ children }) {
 }
 ContentWrapper.Grid = GridWrapper;
 
+function FlexWrapper({ children }) {
+  return (
+    <div className="flex flex-wrap gap-24 items-start justify-center p-8">
+      {children}
+    </div>
+  );
+}
+ContentWrapper.Flex = FlexWrapper;
+
 export default ContentWrapper;
