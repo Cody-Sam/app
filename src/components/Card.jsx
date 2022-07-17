@@ -1,5 +1,5 @@
 function Card({ children }) {
-  children = typeof children === 'object' ? [children] : children
+  children = Array.isArray(children) ? children : [children];
   const header =
     children.find((child) => child.type.displayName === "header") || null;
   const body =
