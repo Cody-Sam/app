@@ -23,6 +23,7 @@ function GlowCard({ children }) {
     background: gradientString(gradientStart),
   });
   children = Array.isArray(children) ? children : [children];
+  children = children.filter((element) => element !== undefined);
   const header =
     children.find((child) => child.type.displayName === "header") || null;
   const body =
@@ -42,7 +43,7 @@ function GlowCard({ children }) {
 
   useEffect(() => {
     setGradientStyle({
-      background: gradientString(gradientStart)
+      background: gradientString(gradientStart),
     });
   }, [gradientStart]);
 
@@ -97,12 +98,14 @@ Footer.displayName = "footer";
 GlowCard.Footer = Footer;
 
 function Media({ src }) {
-  return (
-    <img
-      src={src}
-      className="inset-0 h-full w-full object-cover object-center"
-    />
-  );
+  if (src) {
+    return (
+      <img
+        src={src}
+        className="inset-0 h-full w-full object-cover object-center"
+      />
+    );
+  }
 }
 Media.displayName = "media";
 GlowCard.Media = Media;

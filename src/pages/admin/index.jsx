@@ -1,5 +1,5 @@
 import AdminIndex from "./AdminIndex"
-import Products from "./Products";
+import Products from "./products";
 
 function Admin() {
   return <AdminIndex />;
