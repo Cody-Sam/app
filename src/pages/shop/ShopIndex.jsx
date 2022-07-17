@@ -1,6 +1,7 @@
-import GlowCard from "../../components/GlowCard";
+import Card from "../../components/Card";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
+import ContentWrapper from "../../components/ContentWrapper";
 
 function ShopIndex() {
   let [products, setProducts] = useState([]);
@@ -14,17 +15,21 @@ function ShopIndex() {
   }, []);
 
   return (
-    <div className="flex flex-wrap gap-24 items-start justify-center py-8">
+    <ContentWrapper.Grid>
       {products.map((product) => {
         return (
-          <GlowCard key={product._id}>
-            <h1 className="text-4xl z-20 text-center">{product.name}</h1>
-            <Link to={`item/${product._id}`}>View Item</Link>
-          </GlowCard>
+          <Card key={product._id}>
+            <Card.Header>
+              <h1 className="text-4xl z-20 text-center">{product.name}</h1>
+            </Card.Header>
+            <Card.Body>{product.description}</Card.Body>
+            <Card.Footer>
+              <Link to={`item/${product._id}`}>View Item</Link>
+            </Card.Footer>
+          </Card>
         );
       })}
-
-    </div>
+    </ContentWrapper.Grid>
   );
 }
 export default ShopIndex;
