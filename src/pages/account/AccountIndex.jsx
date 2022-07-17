@@ -2,6 +2,7 @@ import GlowCard from "../../components/GlowCard";
 import { useContext, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { UserContext } from "/src/modules/User";
+import ContentWrapper from "../../components/ContentWrapper";
 
 function AccountIndex() {
   const {
@@ -14,13 +15,13 @@ function AccountIndex() {
       return (
         <div className="flex flex-wrap gap-24 items-start justify-center py-8">
           {/* <GlowCard> */}
-            <p>validating account</p>
+          <p>validating account</p>
           {/* </GlowCard> */}
         </div>
       );
     } else {
       return (
-        <div className="flex flex-wrap gap-24 items-start justify-center py-8">
+        <ContentWrapper.Flex>
           <GlowCard>
             {/* <GlowCard.Header /> */}
             <GlowCard.Body>
@@ -29,7 +30,7 @@ function AccountIndex() {
               </h1>
             </GlowCard.Body>
           </GlowCard>
-        </div>
+        </ContentWrapper.Flex>
       );
     }
   } else {
