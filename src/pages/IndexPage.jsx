@@ -1,24 +1,30 @@
-import GlowCard from "../components/GlowCard";
+import ContentWrapper from "../components/ContentWrapper";
+import Card from "../components/Card";
 
 function IndexPage() {
+  let cards = [];
+  for (let i = 0; i < 20; i++) {
+    cards.push({
+      key: i,
+      src: "https://picsum.photos/400/400",
+      title: `Card Number ${i + 1}`,
+      body: "Card Body",
+      footer: "card footer",
+    });
+  }
   return (
-    <div className="flex flex-wrap gap-24 items-start justify-center py-8">
-      <GlowCard>
-        <h1 className="text-4xl z-20 text-center">This is the index page</h1>
-      </GlowCard>
-      <GlowCard>
-        <h1 className="text-4xl z-20 text-center">Build Your Dream PC</h1>
-      </GlowCard>
-      <GlowCard>
-        <h1 className="text-4xl z-20 text-center">These are only here</h1>
-      </GlowCard>
-      <GlowCard>
-        <h1 className="text-4xl z-20 text-center">To demonstrate</h1>
-      </GlowCard>
-      <GlowCard>
-        <h1 className="text-4xl z-20 text-center">page scrolling</h1>
-      </GlowCard>
-    </div>
+    <ContentWrapper.Grid>
+      {cards.map((card) => {
+        return (
+          <Card key={card.key}>
+            <Card.Media src={card.src} />
+            <Card.Header>{card.title}</Card.Header>
+            <Card.Body>{card.body}</Card.Body>
+            <Card.Footer>{card.footer}</Card.Footer>
+          </Card>
+        );
+      })}
+    </ContentWrapper.Grid>
   );
 }
 
