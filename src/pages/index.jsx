@@ -9,6 +9,7 @@ export default IndexPage;
 export {
   Account,
   Auth,
+  Admin,
   Cart,
   Orders,
   Shop

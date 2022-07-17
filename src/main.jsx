@@ -10,9 +10,7 @@ import GlobalStyles from "./styles/GlobalStyles";
 import App from "./App";
 
 //Page Imports
-import Index, {Account, Auth, Cart, Orders, Shop} from "./pages"
-import CreateProduct from "./pages/admin/CreateProduct";
-const Checkout = Cart.Checkout; 
+import Index, { Account, Admin, Auth, Cart, Orders, Shop } from "./pages";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -25,6 +23,14 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           {/* Account Routes */}
           <Route path="account" element={<Account />} />
 
+          {/* Admin Routes */}
+          <Route path="admin">
+            <Route index element={<Admin />} />
+            <Route path="products" element={<Admin.Products />}>
+              <Route path="new" element={<Admin.Products.New />} />
+            </Route>
+          </Route>
+
           {/* Auth Routes */}
           <Route path="auth">
             <Route index element={<Navigate to="login" />} />
@@ -32,18 +38,13 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="register" element={<Auth.Register />} />
           </Route>
 
-          {/* Admin Routes */}
-          <Route path="admin">
-            <Route path="products/create" element={<CreateProduct />} />
-          </Route>
-
           {/* Cart And Checkout Routes */}
           <Route path="cart">
             <Route index element={<Cart />} />
             <Route path="checkout">
-              <Route index element={<Checkout />} />
-              <Route path="success" element={<Checkout.Success />} />
-              <Route path="failure" element={<Checkout.Failure />} />
+              <Route index element={<Cart.Checkout />} />
+              <Route path="success" element={<Cart.Checkout.Success />} />
+              <Route path="failure" element={<Cart.Checkout.Failure />} />
             </Route>
           </Route>
 
