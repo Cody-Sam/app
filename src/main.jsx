@@ -11,6 +11,7 @@ import App from "./App";
 
 //Page Imports
 import Index, {Account, Auth, Cart, Orders, Shop} from "./pages"
+import CreateProduct from "./pages/admin/CreateProduct";
 const Checkout = Cart.Checkout; 
 
 ReactDOM.createRoot(document.getElementById("root")).render(
@@ -29,6 +30,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route index element={<Navigate to="login" />} />
             <Route path="login" element={<Auth.Login />} />
             <Route path="register" element={<Auth.Register />} />
+          </Route>
+
+          {/* Admin Routes */}
+          <Route path="admin">
+            <Route path="products/create" element={<CreateProduct />} />
           </Route>
 
           {/* Cart And Checkout Routes */}
