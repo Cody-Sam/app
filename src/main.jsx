@@ -15,9 +15,9 @@ import ShopItemPage from "./pages/shop/ShopItemPage";
 import OrdersIndex from "./pages/orders/OrdersIndex";
 import LoginPage from "./pages/auth/LoginPage";
 import RegisterPage from "./pages/auth/RegisterPage";
-import Checkout from "./pages/checkout/Checkout";
 import PaymentSuccessPage from "./pages/checkout/PaymentSuccessPage";
 import PaymentFailurePage from "./pages/checkout/PaymentFailurePage";
+import Cart from "./pages/cart/Cart";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
@@ -31,7 +31,7 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route path="item/:item" element={<ShopItemPage />}/>
           </Route>
           <Route path="orders" element={<OrdersIndex />} />
-          <Route path="checkout" element={<Checkout />} />
+          <Route path="cart" element={<Cart />} />
           <Route path="success" element={<PaymentSuccessPage />} />
           <Route path="failure" element={<PaymentFailurePage />} />
           <Route path="auth">

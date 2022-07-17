@@ -14,6 +14,7 @@ function App() {
     user: null,
     token: sessionStorage.getItem("token")
   });
+
   
   useEffect(() => {
     const fetchUser = async () => {
