@@ -13,7 +13,7 @@ import {
   MdProductionQuantityLimits,
   MdAdminPanelSettings,
 } from "react-icons/md";
-import { UserContext } from "/src/modules/User";
+import { UserContext } from "modules/user";
 
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const { userStore, userDispatch } = useContext(UserContext);

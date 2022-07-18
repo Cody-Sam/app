@@ -1,8 +1,8 @@
-import GlowCard from "../../components/GlowCard";
+import GlowCard from "components/GlowCard";
 import { useContext, useEffect } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
-import { UserContext } from "/src/modules/User";
-import ContentWrapper from "../../components/ContentWrapper";
+import { UserContext } from "modules/user";
+import ContentWrapper from "components/ContentWrapper";
 
 function AccountIndex() {
   const {

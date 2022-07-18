@@ -18,6 +18,19 @@ function userReducer(state, action) {
   }
 }
 
+const fetchUser = async (store,dispatch) => {
+  console.log("Fetching user...")
+  let token = store.token;
+  if (token) {
+    dispatch({ type: "setStatus", data: { status: "pending" } });
+    const res = await fetch("http://localhost:4000/api/v1/users/me", {
+      headers: { authorization: "Bearer " + token },
+    });
+    const user = await res.json();
+    dispatch({ type: "login", data: { user, token } });
+  }
+};
+
 const UserContext = createContext();
 
-export { userReducer, UserContext };
+export { userReducer, UserContext, fetchUser };
