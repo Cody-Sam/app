@@ -1,8 +1,16 @@
 import { Navigate, Outlet } from "react-router-dom";
+import { useContext, useEffect } from "react";
+import { UserContext, fetchUser } from "modules/user";
 
-function ProtectedRoute() {}
+function ProtectedRoute () {}
 
 function LoggedIn({ user, status, children, authRequired = true }) {
+
+  const { userStore, userDispatch } = useContext(UserContext);
+  useEffect(() => {
+    fetchUser(userStore, userDispatch);
+  }, []);
+
   if (status !== "pending") {
     if (!user && authRequired) {
       return <Navigate to="/auth/login" replace />;
@@ -16,6 +24,12 @@ function LoggedIn({ user, status, children, authRequired = true }) {
 }
 
 function Admin({ user, status, children }) {
+  const { userStore, userDispatch } = useContext(UserContext);
+
+  useEffect(() => {
+    fetchUser(userStore, userDispatch);
+  }, []);
+
   if (!user) {
     return <Navigate to="/auth/login" replace />;
   }
@@ -25,7 +39,7 @@ function Admin({ user, status, children }) {
   return children ? children : <Outlet />;
 }
 
-ProtectedRoute.LoggedIn = LoggedIn;
+ProtectedRoute.LoggedIn = LoggedIn
 ProtectedRoute.Admin = Admin;
 
 export default ProtectedRoute;
