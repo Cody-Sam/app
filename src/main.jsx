@@ -3,19 +3,26 @@ import React from "react";
 import ReactDOM from "react-dom/client";
 import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 
-// twin.macro import
-import GlobalStyles from "./styles/GlobalStyles";
-
 // app imports
 import App from "./App";
 
 //Page Imports
-import Index, { Account, Admin, Auth, Cart, Orders, Shop } from "./pages";
+import {
+  Index,
+  Account,
+  Admin,
+  Auth,
+  Build,
+  Cart,
+  Orders,
+  Shop,
+} from "./pages";
 
 ReactDOM.createRoot(document.getElementById("root")).render(
   <React.StrictMode>
     <BrowserRouter>
       <Routes>
+        {/* Customer Routes */}
         <Route path="/" element={<App />}>
           {/* App Index */}
           <Route index element={<Index />} />
@@ -24,9 +31,10 @@ ReactDOM.createRoot(document.getElementById("root")).render(
           <Route path="account" element={<Account />} />
 
           {/* Admin Routes */}
-          <Route path="admin">
+          <Route path="admin" >
             <Route index element={<Admin />} />
-            <Route path="products" element={<Admin.Products />}>
+            <Route path="products">
+              <Route index element={<Admin.Products />} />
               <Route path="new" element={<Admin.Products.New />} />
             </Route>
           </Route>
@@ -36,6 +44,11 @@ ReactDOM.createRoot(document.getElementById("root")).render(
             <Route index element={<Navigate to="login" />} />
             <Route path="login" element={<Auth.Login />} />
             <Route path="register" element={<Auth.Register />} />
+          </Route>
+
+          {/* Builder Routes */}
+          <Route path="build">
+            <Route index element={<Build />} />
           </Route>
 
           {/* Cart And Checkout Routes */}
