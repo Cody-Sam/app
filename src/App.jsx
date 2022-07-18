@@ -3,7 +3,8 @@ import { useEffect, useReducer } from "react";
 import "./index.css";
 
 import { UserContext, userReducer } from "./modules/User";
-import Layout from "components/Layout"
+import Layout from "components/Layout";
+import ProtectedRoute from "components/ProtectedRoute";
 
 //Page Imports
 import {
@@ -39,8 +40,6 @@ function App({ admin = false }) {
     fetchUser();
   }, []);
 
-
-
   return (
     <UserContext.Provider value={{ userStore, userDispatch }}>
       <BrowserRouter>
@@ -51,10 +50,12 @@ function App({ admin = false }) {
             <Route index element={<Index />} />
 
             {/* Account Routes */}
-            <Route path="account" element={<Account />} />
+            <Route path="account" element={<ProtectedRoute.LoggedIn />}>
+              <Route index element={<Account />} />
+            </Route>
 
             {/* Admin Routes */}
-            <Route path="admin">
+            <Route path="admin" element={<ProtectedRoute.Admin />}>
               <Route index element={<Admin />} />
               <Route path="products">
                 <Route index element={<Admin.Products />} />
@@ -85,7 +86,14 @@ function App({ admin = false }) {
             </Route>
 
             {/* Orders Routes */}
-            <Route path="orders" element={<Orders />} />
+            <Route
+              path="orders"
+              element={
+                <ProtectedRoute.LoggedIn>
+                  <Orders />
+                </ProtectedRoute.LoggedIn>
+              }
+            />
 
             {/* Shop Routes */}
             <Route path="shop">
