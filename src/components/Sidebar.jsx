@@ -1,5 +1,5 @@
 import { useContext } from "react";
-import { NavLink, useLocation } from "react-router-dom";
+import { NavLink, useLocation, useNavigate} from "react-router-dom";
 import {
   MdMenu,
   MdMenuOpen,
@@ -18,6 +18,7 @@ import { UserContext } from "/src/modules/User";
 function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const { userStore, userDispatch } = useContext(UserContext);
   const location = useLocation();
+  const navigate = useNavigate();
 
   const admin = location.pathname.split("/")[1] == "admin";
 

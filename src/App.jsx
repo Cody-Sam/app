@@ -20,16 +20,17 @@ import {
 
 function App({ admin = false }) {
   const [userStore, userDispatch] = useReducer(userReducer, {
-    status: "noUser",
+    status: sessionStorage.getItem("token") ? "pending" :"unauthenticated",
     user: null,
     token: sessionStorage.getItem("token"),
   });
 
   useEffect(() => {
+    console.log("checking auth")
     const fetchUser = async () => {
       let token = userStore.token;
       if (token) {
-        userDispatch({ type: "setStatus", data: { status: "authorising" } });
+        userDispatch({ type: "setStatus", data: { status: "pending" } });
         const res = await fetch("http://localhost:4000/api/v1/users/me", {
           headers: { authorization: "Bearer " + token },
         });
@@ -50,12 +51,18 @@ function App({ admin = false }) {
             <Route index element={<Index />} />
 
             {/* Account Routes */}
-            <Route path="account" element={<ProtectedRoute.LoggedIn />}>
+            <Route
+              path="account"
+              element={<ProtectedRoute.LoggedIn user={userStore.user} status={userStore.status} />}
+            >
               <Route index element={<Account />} />
             </Route>
 
             {/* Admin Routes */}
-            <Route path="admin" element={<ProtectedRoute.Admin />}>
+            <Route
+              path="admin"
+              element={<ProtectedRoute.Admin user={userStore.user} status={userStore.status} />}
+            >
               <Route index element={<Admin />} />
               <Route path="products">
                 <Route index element={<Admin.Products />} />
@@ -64,7 +71,16 @@ function App({ admin = false }) {
             </Route>
 
             {/* Auth Routes */}
-            <Route path="auth">
+            <Route
+              path="auth"
+              element={
+                <ProtectedRoute.LoggedIn
+                  user={userStore.user}
+                  status={userStore.status}
+                  authRequired={false}
+                />
+              }
+            >
               <Route index element={<Navigate to="login" />} />
               <Route path="login" element={<Auth.Login />} />
               <Route path="register" element={<Auth.Register />} />
