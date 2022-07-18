@@ -2,7 +2,7 @@ import { BrowserRouter, Routes, Route, Navigate } from "react-router-dom";
 import { useEffect, useReducer } from "react";
 import "./index.css";
 
-import { UserContext, userReducer } from "./modules/User";
+import { UserContext, userReducer, fetchUser } from "modules/user";
 import Layout from "components/Layout";
 import ProtectedRoute from "components/ProtectedRoute";
 
@@ -18,7 +18,7 @@ import {
   Shop,
 } from "./pages";
 
-function App({ admin = false }) {
+function App() {
   const [userStore, userDispatch] = useReducer(userReducer, {
     status: sessionStorage.getItem("token") ? "pending" :"unauthenticated",
     user: null,
@@ -26,19 +26,7 @@ function App({ admin = false }) {
   });
 
   useEffect(() => {
-    console.log("checking auth")
-    const fetchUser = async () => {
-      let token = userStore.token;
-      if (token) {
-        userDispatch({ type: "setStatus", data: { status: "pending" } });
-        const res = await fetch("http://localhost:4000/api/v1/users/me", {
-          headers: { authorization: "Bearer " + token },
-        });
-        const user = await res.json();
-        userDispatch({ type: "login", data: { user, token } });
-      }
-    };
-    fetchUser();
+    fetchUser(userStore, userDispatch);
   }, []);
 
   return (
