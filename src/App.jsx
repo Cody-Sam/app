@@ -1,13 +1,12 @@
 import { useState, useEffect, useReducer } from "react";
 import { Outlet, Link } from "react-router-dom";
-import tw from "twin.macro";
 import "./index.css";
 
 import Sidebar from "./components/Sidebar";
 import ContentWrapper from "./components/ContentWrapper.jsx";
 import { UserContext, userReducer } from "./modules/User";
 
-function App() {
+function App({admin = false}) {
   let [sidebarOpen, setSidebarOpen] = useState(false);
   const [userStore, userDispatch] = useReducer(userReducer, {
     status:"noUser",
