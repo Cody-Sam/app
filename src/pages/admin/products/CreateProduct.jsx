@@ -6,6 +6,7 @@ import Card from "components/Card";
 import { parts, sockets } from "modules/parts";
 import { MdAddBox } from "react-icons/md";
 import { UserContext } from "modules/user";
+import { useNavigate } from "react-router-dom";
 
 const Submit = styled.button`
   ${tw`
@@ -22,6 +23,7 @@ const FormInput = ({ name, value, type, placeholder, onChange }) => {
       type={type}
       placeholder={placeholder}
       onChange={(e) => {
+        type == "file" && onChange(e);
         onChange(type == "number" ? Number(e.target.value) : e.target.value);
       }}
     ></input>
@@ -73,8 +75,10 @@ const CreateProduct = () => {
   const [compatType, setCompatType] = useState("");
   const [compatSocket, setCompatSocket] = useState("");
   const [image, setImage] = useState("");
+  const [formState, setFormState] = useState("unsent");
 
   const { userStore } = useContext(UserContext);
+  const navigate = useNavigate();
 
   const setFileToBase = (file) => {
     const reader = new FileReader();
@@ -87,11 +91,11 @@ const CreateProduct = () => {
     e.preventDefault();
     const file = e.target.files[0];
     setFileToBase(file);
-    console.log(file);
   };
 
   const productSubmit = async (e) => {
     e.preventDefault();
+    setFormState("pending");
     const productData = {
       name: name,
       description: description,
@@ -101,139 +105,162 @@ const CreateProduct = () => {
       quantity: quantity,
       image: image,
     };
-    console.log(JSON.stringify(productData));
     const res = await fetch("http://localhost:4000/api/v1/products", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
-        authorization: "Bearer " + userStore.token,
+        authorization: `Bearer ${userStore.token}`,
       },
       body: JSON.stringify(productData),
     });
-    const { url } = await res.json();
-    window.location = url;
+    console.log(res.status);
+    const data = await res.json();
+    setFormState("unsent");
+    if (res.status === 201) {
+      const url = data.url.split("/").splice(-1);
+      console.log(url);
+      const prompt = window.confirm("Would you like to go to this items shop page?");
+      if(prompt){
+        navigate(`/shop/item/${url}`);
+      }else{
+        navigate("/admin/products/new");
+      }
+    }
+    console.log(data);
   };
+  if (formState === "unsent") {
+    return (
+      <ContentWrapper.Flex>
+        <Card padding="4">
+          <Card.Body>
+            <form className="text-white flex flex-col" onSubmit={productSubmit}>
+              <FormLabel htmlFor="name" label="Name" />
+              <FormInput name="name" value={name} onChange={setName} />
 
-  return (
-    <ContentWrapper.Flex>
-      <Card padding="4">
-        <Card.Body>
-          <form className="text-white flex flex-col" onSubmit={productSubmit}>
-            <FormLabel htmlFor="name" label="Name" />
-            <FormInput name="name" value={name} onChange={setName} />
+              <FormLabel htmlFor="description" label="Description" />
+              <FormInput
+                name="description"
+                value={description}
+                onChange={setDescription}
+              />
 
-            <FormLabel htmlFor="description" label="Description" />
-            <FormInput
-              name="description"
-              value={description}
-              onChange={setDescription}
-            />
+              <FormLabel htmlFor="type" label="Type" />
+              <FormSelect
+                name="type"
+                value={type}
+                onChange={(e) => {
+                  let prompt = true;
+                  if (type) {
+                    prompt = window.confirm(
+                      "Changing this will remove any compatibility information already entered"
+                    );
+                  }
+                  if (prompt) {
+                    setType(e.target.value);
+                    setCompatibility([]);
+                    setCompatType("");
+                    setCompatSocket("");
+                  } else {
+                    e.target.value = type;
+                  }
+                }}
+                options={parts}
+              />
 
-            <FormLabel htmlFor="type" label="Type" />
-            <FormSelect
-              name="type"
-              value={type}
-              onChange={(e) => {
-                let prompt = true;
-                if (type) {
-                  prompt = window.confirm(
-                    "Changing this will remove any compatibility information already entered"
-                  );
-                }
-                if (prompt) {
-                  setType(e.target.value);
-                  setCompatibility([]);
-                  setCompatType("");
-                  setCompatSocket("");
-                } else {
-                  e.target.value = type;
-                }
-              }}
-              options={parts}
-            />
+              <FormLabel htmlFor="price" label="Price" />
+              <FormInput
+                name="price"
+                type="number"
+                value={price}
+                onChange={setPrice}
+              />
 
-            <FormLabel htmlFor="price" label="Price" />
-            <FormInput
-              name="price"
-              type="number"
-              value={price}
-              onChange={setPrice}
-            />
+              <FormLabel htmlFor="quantity" label="Stock Quantity" />
+              <FormInput
+                name="quantity"
+                type="number"
+                value={quantity}
+                onChange={setQuantity}
+              />
 
-            <FormLabel htmlFor="quantity" label="Stock Quantity" />
-            <FormInput
-              name="quantity"
-              type="number"
-              value={quantity}
-              onChange={setQuantity}
-            />
-
-            {type && (
-              <>
-                <FormLabel htmlFor="compatibility" label="Item Compatibility" />
-                <div className="w-full flex ring rounded">
-                  <div className="grow">
-                    <FormSelect
-                      name="compatType"
-                      value={compatType}
-                      onChange={(e) => setCompatType(e.target.value)}
-                      formatted={false}
-                      width="full"
-                      options={parts.find((part) => part.slug === type).sockets}
-                    />
-                    {compatType && (
+              {type && (
+                <>
+                  <FormLabel
+                    htmlFor="compatibility"
+                    label="Item Compatibility"
+                  />
+                  <div className="w-full flex ring rounded">
+                    <div className="grow">
                       <FormSelect
-                        name="compatSocket"
-                        value={compatSocket}
-                        onChange={(e) => setCompatSocket(e.target.value)}
+                        name="compatType"
+                        value={compatType}
+                        onChange={(e) => setCompatType(e.target.value)}
                         formatted={false}
                         width="full"
                         options={
-                          sockets.find((socket) => socket.slug === compatType)
-                            .options
+                          parts.find((part) => part.slug === type).sockets
                         }
                       />
-                    )}
-                  </div>
-                  <div className="w-6">
-                    <button
-                      type="button"
-                      onClick={() => {
-                        setCompatibility([
-                          ...compatibility,
-                          {
-                            type: compatType,
-                            socket: compatSocket,
-                          },
-                        ]);
-                      }}
-                    >
-                      <MdAddBox size="1.5em" />
-                    </button>
-                  </div>
-                </div>
-              </>
-            )}
-            {compatibility && (
-              <>
-                {compatibility.map((item) => {
-                  return (
-                    <div>
-                      {item.type} | {item.socket}
+                      {compatType && (
+                        <FormSelect
+                          name="compatSocket"
+                          value={compatSocket}
+                          onChange={(e) => setCompatSocket(e.target.value)}
+                          formatted={false}
+                          width="full"
+                          options={
+                            sockets.find((socket) => socket.slug === compatType)
+                              .options
+                          }
+                        />
+                      )}
                     </div>
-                  );
-                })}
-              </>
-            )}
+                    <div className="w-6">
+                      <button
+                        type="button"
+                        onClick={() => {
+                          setCompatibility([
+                            ...compatibility,
+                            {
+                              type: compatType,
+                              socket: compatSocket,
+                            },
+                          ]);
+                        }}
+                      >
+                        <MdAddBox size="1.5em" />
+                      </button>
+                    </div>
+                  </div>
+                </>
+              )}
+              {compatibility && (
+                <>
+                  {compatibility.map((item) => {
+                    return (
+                      <div>
+                        {item.type} | {item.socket}
+                      </div>
+                    );
+                  })}
+                </>
+              )}
 
-            <FormLabel htmlFor="image" label="Product Image" />
-            <FormInput name="image" type="file" onChange={handleImage} />
-            <Submit type="submit">Create</Submit>
-          </form>
-        </Card.Body>
+              <FormLabel htmlFor="image" label="Product Image" />
+              <FormInput name="image" type="file" onChange={handleImage} />
+              <Submit type="submit">Create</Submit>
+            </form>
+          </Card.Body>
+        </Card>
+      </ContentWrapper.Flex>
+    );
+  } else if (formState === "pending") {
+    return (
+      <Card>
+        <Card.Body>Please Wait...</Card.Body>
       </Card>
-    </ContentWrapper.Flex>
-  );
+    );
+  }
 };
 
 export default CreateProduct;
