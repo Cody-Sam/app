@@ -116,7 +116,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
         <MenuItem name="Account" path="account">
           <MdAccountBox size="2em" />
         </MenuItem>
-        {!userStore.user.admin && (
+        {userStore.user.admin && (
           <MenuItem name="Admin" path="admin">
             <MdAdminPanelSettings size="2em" />
           </MenuItem>
