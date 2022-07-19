@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useContext } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
 import ContentWrapper from "components/ContentWrapper";
 import Card from "components/Card";
 import { parts, sockets } from "modules/parts";
+import { MdAddBox } from "react-icons/md";
+import { UserContext } from "modules/user";
 
 const Submit = styled.button`
   ${tw`
@@ -14,7 +16,7 @@ const Submit = styled.button`
 const FormInput = ({ name, value, type, placeholder, onChange }) => {
   return (
     <input
-      className="w-full bg-black mx-2 px-2 ring rounded"
+      className="w-full h-6 bg-black ring rounded"
       name={name}
       value={value}
       type={type}
@@ -36,9 +38,7 @@ const FormSelect = ({
 }) => {
   return (
     <select
-      className={`bg-black w-${width} ${
-        formatted && " mx-2 px-2 ring rounded"
-      }`}
+      className={`h-6 bg-black w-${width} ${formatted && "ring rounded"}`}
       name={name}
       placeholder={placeholder}
       onChange={onChange}
@@ -57,7 +57,7 @@ const FormSelect = ({
 
 const FormLabel = ({ htmlFor, label, children }) => {
   return (
-    <label className="px-4 pt-2" htmlFor={htmlFor}>
+    <label className="px-2 pt-2" htmlFor={htmlFor}>
       {children || label}
     </label>
   );
@@ -69,10 +69,12 @@ const CreateProduct = () => {
   const [type, setType] = useState("");
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
-  const [compatibility, setCompatibility] = useState("");
+  const [compatibility, setCompatibility] = useState([]);
   const [compatType, setCompatType] = useState("");
   const [compatSocket, setCompatSocket] = useState("");
   const [image, setImage] = useState("");
+
+  const { userStore } = useContext(UserContext);
 
   const setFileToBase = (file) => {
     const reader = new FileReader();
@@ -99,9 +101,13 @@ const CreateProduct = () => {
       quantity: quantity,
       image: image,
     };
+    console.log(JSON.stringify(productData));
     const res = await fetch("http://localhost:4000/api/v1/products", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        authorization: "Bearer " + userStore.token,
+      },
       body: JSON.stringify(productData),
     });
     const { url } = await res.json();
@@ -110,7 +116,7 @@ const CreateProduct = () => {
 
   return (
     <ContentWrapper.Flex>
-      <Card>
+      <Card padding="4">
         <Card.Body>
           <form className="text-white flex flex-col" onSubmit={productSubmit}>
             <FormLabel htmlFor="name" label="Name" />
@@ -127,9 +133,23 @@ const CreateProduct = () => {
             <FormSelect
               name="type"
               value={type}
-              onChange={(e) => setType(e.target.value)}
+              onChange={(e) => {
+                let prompt = true;
+                if (type) {
+                  prompt = window.confirm(
+                    "Changing this will remove any compatibility information already entered"
+                  );
+                }
+                if (prompt) {
+                  setType(e.target.value);
+                  setCompatibility([]);
+                  setCompatType("");
+                  setCompatSocket("");
+                } else {
+                  e.target.value = type;
+                }
+              }}
               options={parts}
-              className="w-2/3 bg-black"
             />
 
             <FormLabel htmlFor="price" label="Price" />
@@ -151,29 +171,58 @@ const CreateProduct = () => {
             {type && (
               <>
                 <FormLabel htmlFor="compatibility" label="Item Compatibility" />
-                <div className="w-full ring rounded mx-2">
-                  <FormSelect
-                    name="compatType"
-                    value={compatType}
-                    onChange={(e) => setCompatType(e.target.value)}
-                    formatted={false}
-                    width="2/3"
-                    options={parts.find((part) => part.slug === type).sockets}
-                  />
-                  {compatType && (
+                <div className="w-full flex ring rounded">
+                  <div className="grow">
                     <FormSelect
-                      name="compatSocket"
-                      value={compatSocket}
-                      onChange={(e) => setCompatSocket(e.target.value)}
+                      name="compatType"
+                      value={compatType}
+                      onChange={(e) => setCompatType(e.target.value)}
                       formatted={false}
-                      width="1/3"
-                      options={
-                        sockets.find((socket) => socket.slug === compatType)
-                          .options
-                      }
+                      width="full"
+                      options={parts.find((part) => part.slug === type).sockets}
                     />
-                  )}
+                    {compatType && (
+                      <FormSelect
+                        name="compatSocket"
+                        value={compatSocket}
+                        onChange={(e) => setCompatSocket(e.target.value)}
+                        formatted={false}
+                        width="full"
+                        options={
+                          sockets.find((socket) => socket.slug === compatType)
+                            .options
+                        }
+                      />
+                    )}
+                  </div>
+                  <div className="w-6">
+                    <button
+                      type="button"
+                      onClick={() => {
+                        setCompatibility([
+                          ...compatibility,
+                          {
+                            type: compatType,
+                            socket: compatSocket,
+                          },
+                        ]);
+                      }}
+                    >
+                      <MdAddBox size="1.5em" />
+                    </button>
+                  </div>
                 </div>
+              </>
+            )}
+            {compatibility && (
+              <>
+                {compatibility.map((item) => {
+                  return (
+                    <div>
+                      {item.type} | {item.socket}
+                    </div>
+                  );
+                })}
               </>
             )}
 
