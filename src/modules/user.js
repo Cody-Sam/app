@@ -19,7 +19,6 @@ function userReducer(state, action) {
 }
 
 const fetchUser = async (store,dispatch) => {
-  console.log("Fetching user...")
   let token = store.token;
   if (token) {
     dispatch({ type: "setStatus", data: { status: "pending" } });
