@@ -17,6 +17,8 @@ import {
   Orders,
   Shop,
 } from "./pages";
+import OrdersIndex from "./pages/orders/OrdersIndex";
+import ShowOrder from "./pages/orders/ShowOrder";
 
 function App() {
   const [userStore, userDispatch] = useReducer(userReducer, {
@@ -41,7 +43,12 @@ function App() {
             {/* Account Routes */}
             <Route
               path="account"
-              element={<ProtectedRoute.LoggedIn user={userStore.user} status={userStore.status} />}
+              element={
+                <ProtectedRoute.LoggedIn
+                  user={userStore.user}
+                  status={userStore.status}
+                />
+              }
             >
               <Route index element={<Account />} />
             </Route>
@@ -49,7 +56,12 @@ function App() {
             {/* Admin Routes */}
             <Route
               path="admin"
-              element={<ProtectedRoute.Admin user={userStore.user} status={userStore.status} />}
+              element={
+                <ProtectedRoute.Admin
+                  user={userStore.user}
+                  status={userStore.status}
+                />
+              }
             >
               <Route index element={<Admin />} />
               <Route path="products">
@@ -93,9 +105,16 @@ function App() {
             <Route
               path="orders"
               element={
-                <ProtectedRoute.LoggedIn>
-                  <Orders />
-                </ProtectedRoute.LoggedIn>
+                <OrdersIndex />
+                // <ProtectedRoute.LoggedIn>
+                //   <Orders />
+                // </ProtectedRoute.LoggedIn>
+              }
+            />
+            <Route
+              path="orders/:id"
+              element={
+                <ShowOrder />
               }
             />
 

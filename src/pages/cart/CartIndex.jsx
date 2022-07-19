@@ -62,7 +62,7 @@ const Cart = () => {
           {cart.map((cartItem, i) => {
             return (
               <li key={i}>
-                {cartItem.name}, {cartItem.quantity}, {`$${cartItem.price / 100}`}
+                {cartItem.name}, {cartItem.quantity}, {`$${Math.floor((cartItem.price / 100) * cartItem.quantity)}`}
                 <Button onClick={() => increase(i)}>+</Button>
                 <Button onClick={() => decrease(i)}>-</Button>
               </li>

@@ -1,5 +1,5 @@
 import { useContext, useState } from "react";
-import { NavLink, useLocation, useNavigate} from "react-router-dom";
+import { NavLink, useLocation, useNavigate } from "react-router-dom";
 import {
   MdMenu,
   MdMenuOpen,
@@ -25,15 +25,15 @@ function Sidebar() {
 
   function MenuItem({ name, children, path }) {
     return (
-      <div onClick={() => sidebarOpen && setSidebarOpen(!sidebarOpen)} className={`flex w-full`}>
-        <NavLink
-          className={({ isActive }) => (isActive ? "text-green-500" : "")}
-          to={path}
-        >
-          {children}
-        </NavLink>
-        {sidebarOpen && <span className="pl-2 my-auto">{name}</span>}
-      </div>
+          <NavLink
+        className={({ isActive }) => (isActive ? "text-green-500" : "")}
+        to={path} onClick={() => sidebarOpen && setSidebarOpen(!sidebarOpen)}
+          >
+        <div className={`flex w-full`}>
+            {children}
+          {sidebarOpen && <span className="pl-2 my-auto">{name}</span>}
+        </div>
+          </NavLink>
     );
   }
 
