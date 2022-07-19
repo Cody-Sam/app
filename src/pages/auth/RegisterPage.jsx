@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Navigate, useNavigate, Link } from "react-router-dom";
-import GlowCard from "../../components/GlowCard";
-import { UserContext } from "../../modules/User";
+import GlowCard from "components/GlowCard";
+import { UserContext } from "modules/user";
 
 function RegisterPage() {
   const [email, setEmail] = useState("");

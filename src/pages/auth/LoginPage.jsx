@@ -1,7 +1,7 @@
 import { useState, useContext } from "react";
 import { Navigate, useNavigate, Link } from "react-router-dom";
-import GlowCard from "../../components/GlowCard";
-import { UserContext } from "../../modules/User";
+import GlowCard from "components/GlowCard";
+import { UserContext } from "modules/user";
 
 function LoginPage() {
   const [email, setEmail] = useState("");
@@ -30,7 +30,7 @@ function LoginPage() {
           type: "login",
           data: { user: data.user, token: data.token },
         });
-        navigate("/account");
+        navigate("/account", {replace:true});
         break;
       default:
         setFormState({
@@ -41,79 +41,67 @@ function LoginPage() {
     }
   }
 
-  if (token) {
-    if (status === "authorising") {
-      return (
-        <div className="flex flex-wrap gap-24 items-start justify-center py-8">
-          <GlowCard>Validating Account</GlowCard>
-        </div>
-      );
-    } else if (status === "authorised") {
-      return <Navigate to="/account" />;
-    }
-  } else {
-    return (
-      <div className="flex flex-wrap gap-24 items-start justify-center py-8">
-        <div className="w-full flex-col px-2">
-          <div className="text-center">Login</div>
-          <form
-            className="text-white flex flex-wrap"
-            onSubmit={(event) => login(event)}
-          >
-            <label htmlFor="email" className="w-full mx-2">
-              email:
-              <span className="text-red-500">
-                {formState.errors.email && formState.errors.email}
-              </span>
-            </label>
-            <input
-              className={`w-full bg-black mx-2 px-2 ring rounded ${
-                formState.errors.email && "ring-red-500"
-              }`}
-              type="text"
-              name="email"
-              value={email}
-              placeholder="your-email@example.com"
-              onChange={(event) => {
-                setEmail(" ");
-                setEmail(event.target.value);
-              }}
-            ></input>
+  return (
+    <div className="flex flex-wrap gap-24 items-start justify-center py-8">
+      <div className="w-full flex-col px-2">
+        <div className="text-center">Login</div>
+        <form
+          className="text-white flex flex-wrap"
+          onSubmit={(event) => login(event)}
+        >
+          <label htmlFor="email" className="w-full mx-2">
+            email:
+            <span className="text-red-500">
+              {formState.errors.email && formState.errors.email}
+            </span>
+          </label>
+          <input
+            className={`w-full bg-black mx-2 px-2 ring rounded ${
+              formState.errors.email && "ring-red-500"
+            }`}
+            type="text"
+            name="email"
+            value={email}
+            placeholder="your-email@example.com"
+            onChange={(event) => {
+              setEmail(" ");
+              setEmail(event.target.value);
+            }}
+          ></input>
 
-            <label htmlFor="password" className="mt-4 mx-2">
-              password:
-              <span className="text-red-500">
-                {formState.errors.password && formState.errors.password}
-              </span>
-            </label>
-            <input
-              className={`w-full bg-black mx-2 px-2 ring rounded ${
-                formState.errors.password && "ring-red-500"
-              }`}
-              type="password"
-              name="password"
-              value={password}
-              onChange={(event) => setPassword(event.target.value)}
-            ></input>
+          <label htmlFor="password" className="mt-4 mx-2">
+            password:
+            <span className="text-red-500">
+              {formState.errors.password && formState.errors.password}
+            </span>
+          </label>
+          <input
+            className={`w-full bg-black mx-2 px-2 ring rounded ${
+              formState.errors.password && "ring-red-500"
+            }`}
+            type="password"
+            name="password"
+            value={password}
+            onChange={(event) => setPassword(event.target.value)}
+          ></input>
 
-            <input
-              type="submit"
-              value="Login"
-              className="bg-gray-800 border px-2 rounded mx-2 my-4 ring"
-            />
-            {formState.errors.form && (
-              <p className="my-auto bg-gray-900 text-red-500 border-red-500 rounded border px-2">
-                {formState.errors.form}
-              </p>
-            )}
-          </form>
-          <div className="text-center">
-            <Link to="/auth/register/">Register</Link> | Forgot Password
-          </div>
+          <input
+            type="submit"
+            value="Login"
+            className="bg-gray-800 border px-2 rounded mx-2 my-4 ring"
+          />
+          {formState.errors.form && (
+            <p className="my-auto bg-gray-900 text-red-500 border-red-500 rounded border px-2">
+              {formState.errors.form}
+            </p>
+          )}
+        </form>
+        <div className="text-center">
+          <Link to="/auth/register/">Register</Link> | Forgot Password
         </div>
       </div>
-    );
-  }
+    </div>
+  );
 }
 
 export default LoginPage;
