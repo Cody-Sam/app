@@ -1,4 +1,4 @@
-function Card({ children }) {
+function Card({ padding=8, children }) {
   children = Array.isArray(children) ? children : [children];
   children = children.filter((element) => element !== undefined);
 
@@ -14,7 +14,7 @@ function Card({ children }) {
   return (
     <div className="bg-black ring ring-white rounded-lg flex flex-col md:flex-row overflow-hidden">
       {media && <div className="h-64 w-auto">{media}</div>}
-      <div className="w-full py-4 px-8 flex flex-col justify-between">
+      <div className={`w-full py-${padding/2} px-${padding} flex flex-col justify-between`}>
         {header && <div className="h-full">{header}</div>}
         <div className="">{body}</div>
         {footer && <div>{footer}</div>}
