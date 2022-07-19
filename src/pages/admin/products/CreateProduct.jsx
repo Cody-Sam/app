@@ -1,16 +1,9 @@
 import React, { useState } from "react";
 import styled from "styled-components";
 import tw from "twin.macro";
-import ContentWrapper from "../../../components/ContentWrapper";
-import Card from "../../../components/Card";
-
-const PageContainer = styled.div`
-  ${tw`
-        flex
-        flex-col
-        items-center
-    `}
-`;
+import ContentWrapper from "components/ContentWrapper";
+import Card from "components/Card";
+import { parts, sockets } from "modules/parts";
 
 const Submit = styled.button`
   ${tw`
@@ -18,14 +11,57 @@ const Submit = styled.button`
     `}
 `;
 
-const NewProductForm = styled.form`
-  ${tw`
-  flex
-  flex-col
-  width[50%]
-        text-black
-    `}
-`;
+const FormInput = ({ name, value, type, placeholder, onChange }) => {
+  return (
+    <input
+      className="w-full bg-black mx-2 px-2 ring rounded"
+      name={name}
+      value={value}
+      type={type}
+      placeholder={placeholder}
+      onChange={(e) => {
+        onChange(type == "number" ? Number(e.target.value) : e.target.value);
+      }}
+    ></input>
+  );
+};
+
+const FormSelect = ({
+  name,
+  width = "full",
+  formatted = true,
+  placeholder,
+  onChange,
+  options,
+}) => {
+  return (
+    <select
+      className={`bg-black w-${width} ${
+        formatted && " mx-2 px-2 ring rounded"
+      }`}
+      name={name}
+      placeholder={placeholder}
+      onChange={onChange}
+    >
+      <option value=""></option>
+      {options.map((option) => {
+        return (
+          <option key={option.slug} value={option.slug}>
+            {option.name}
+          </option>
+        );
+      })}
+    </select>
+  );
+};
+
+const FormLabel = ({ htmlFor, label, children }) => {
+  return (
+    <label className="px-4 pt-2" htmlFor={htmlFor}>
+      {children || label}
+    </label>
+  );
+};
 
 const CreateProduct = () => {
   const [name, setName] = useState("");
@@ -34,6 +70,8 @@ const CreateProduct = () => {
   const [price, setPrice] = useState("");
   const [quantity, setQuantity] = useState("");
   const [compatibility, setCompatibility] = useState("");
+  const [compatType, setCompatType] = useState("");
+  const [compatSocket, setCompatSocket] = useState("");
   const [image, setImage] = useState("");
 
   const setFileToBase = (file) => {
@@ -72,56 +110,79 @@ const CreateProduct = () => {
 
   return (
     <ContentWrapper.Flex>
-      <NewProductForm onSubmit={productSubmit}>
-        <input
-          name="name"
-          value={name}
-          placeholder="Name"
-          onChange={(e) => setName(e.target.value)}
-        ></input>
-        <input
-          name="description"
-          value={description}
-          placeholder="Description"
-          onChange={(e) => setDescription(e.target.value)}
-        ></input>
-        <input
-          name="type"
-          value={type}
-          placeholder="Type"
-          onChange={(e) => {
-            setType(e.target.value);
-          }}
-        ></input>
-        <input
-          name="compatibility"
-          value={compatibility}
-          placeholder="Compatibility notworkingyet"
-          onChange={(e) => {
-            setCompatibility(e.target.value);
-          }}
-        ></input>
-        <input
-          name="quantity"
-          type="number"
-          value={quantity}
-          placeholder="Quantity"
-          onChange={(e) => {
-            setQuantity(Number(e.target.value));
-          }}
-        ></input>
-        <input
-          name="price"
-          type="number"
-          value={price}
-          placeholder="Price"
-          onChange={(e) => {
-            setPrice(Number(e.target.value));
-          }}
-        ></input>
-        <input name="image" type="file" onChange={handleImage}></input>
-        <Submit type="submit">Create</Submit>
-      </NewProductForm>
+      <Card>
+        <Card.Body>
+          <form className="text-white flex flex-col" onSubmit={productSubmit}>
+            <FormLabel htmlFor="name" label="Name" />
+            <FormInput name="name" value={name} onChange={setName} />
+
+            <FormLabel htmlFor="description" label="Description" />
+            <FormInput
+              name="description"
+              value={description}
+              onChange={setDescription}
+            />
+
+            <FormLabel htmlFor="type" label="Type" />
+            <FormSelect
+              name="type"
+              value={type}
+              onChange={(e) => setType(e.target.value)}
+              options={parts}
+              className="w-2/3 bg-black"
+            />
+
+            <FormLabel htmlFor="price" label="Price" />
+            <FormInput
+              name="price"
+              type="number"
+              value={price}
+              onChange={setPrice}
+            />
+
+            <FormLabel htmlFor="quantity" label="Stock Quantity" />
+            <FormInput
+              name="quantity"
+              type="number"
+              value={quantity}
+              onChange={setQuantity}
+            />
+
+            {type && (
+              <>
+                <FormLabel htmlFor="compatibility" label="Item Compatibility" />
+                <div className="w-full ring rounded mx-2">
+                  <FormSelect
+                    name="compatType"
+                    value={compatType}
+                    onChange={(e) => setCompatType(e.target.value)}
+                    formatted={false}
+                    width="2/3"
+                    options={parts.find((part) => part.slug === type).sockets}
+                  />
+                  {compatType && (
+                    <FormSelect
+                      name="compatSocket"
+                      value={compatSocket}
+                      onChange={(e) => setCompatSocket(e.target.value)}
+                      formatted={false}
+                      width="1/3"
+                      options={
+                        sockets.find((socket) => socket.slug === compatType)
+                          .options
+                      }
+                    />
+                  )}
+                </div>
+              </>
+            )}
+
+            <FormLabel htmlFor="image" label="Product Image" />
+            <FormInput name="image" type="file" onChange={handleImage} />
+            <Submit type="submit">Create</Submit>
+          </form>
+        </Card.Body>
+      </Card>
     </ContentWrapper.Flex>
   );
 };
