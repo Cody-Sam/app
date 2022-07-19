@@ -45,17 +45,17 @@ const Cart = () => {
     };
 
     const increase = (index) => {
-        cart[index].quantity++
-        setCart(...cart)
-        localStorage.cart = JSON.stringify(cart);
+      cart[index].quantity++;
+      localStorage.cart = JSON.stringify(cart);
+      setCart(JSON.parse(localStorage.cart));
     }
     
-    const decrease = (index) => {
-        cart[index].quantity--
-        setCart(...cart)
-        localStorage.cart = JSON.stringify(cart);
+  const decrease = (index) => {
+      cart[index].quantity--
+      localStorage.cart = JSON.stringify(cart);
+      setCart(JSON.parse(localStorage.cart));
     }
-
+  if (cart.length > 0) {
     return (
       <div>
         <ul>
@@ -63,15 +63,22 @@ const Cart = () => {
             return (
               <li key={i}>
                 {cartItem.name}, {cartItem.quantity}, {`$${cartItem.price / 100}`}
-                {/* <Button onClick={() => increase(i)}>+</Button>
-                <Button onClick={() => decrease(i)}>-</Button> */}
+                <Button onClick={() => increase(i)}>+</Button>
+                <Button onClick={() => decrease(i)}>-</Button>
               </li>
             );
           })}
-            </ul>
-            <Button onClick={createCheckout}>Checkout</Button>
+        </ul>
+        <Button onClick={createCheckout}>Checkout</Button>
       </div>
     );
+  } else {
+    return (
+    <div>
+      <h1>Cart Empty</h1>
+    </div>
+    )
+  }
 }
 
 export default Cart

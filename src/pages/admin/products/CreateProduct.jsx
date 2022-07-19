@@ -82,7 +82,6 @@ const CreateProduct = () => {
     };
   };
   const handleImage = (e) => {
-    e.preventDefault();
     const file = e.target.files[0];
     setFileToBase(file);
     console.log(file);
@@ -101,7 +100,10 @@ const CreateProduct = () => {
     };
     const res = await fetch("http://localhost:4000/api/v1/products", {
       method: "POST",
-      headers: { "Content-Type": "application/json" },
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${sessionStorage.token}`,
+      },
       body: JSON.stringify(productData),
     });
     const { url } = await res.json();
@@ -178,7 +180,7 @@ const CreateProduct = () => {
             )}
 
             <FormLabel htmlFor="image" label="Product Image" />
-            <FormInput name="image" type="file" onChange={handleImage} />
+            <input name="image" type="file" onChange={handleImage}></input>
             <Submit type="submit">Create</Submit>
           </form>
         </Card.Body>

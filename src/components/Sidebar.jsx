@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useState } from "react";
 import { NavLink, useLocation, useNavigate} from "react-router-dom";
 import {
   MdMenu,
@@ -15,16 +15,17 @@ import {
 } from "react-icons/md";
 import { UserContext } from "modules/user";
 
-function Sidebar({ sidebarOpen, setSidebarOpen }) {
+function Sidebar() {
   const { userStore, userDispatch } = useContext(UserContext);
   const location = useLocation();
   const navigate = useNavigate();
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const admin = location.pathname.split("/")[1] == "admin";
 
   function MenuItem({ name, children, path }) {
     return (
-      <div className={`flex w-full`}>
+      <div onClick={() => sidebarOpen && setSidebarOpen(!sidebarOpen)} className={`flex w-full`}>
         <NavLink
           className={({ isActive }) => (isActive ? "text-green-500" : "")}
           to={path}

@@ -1,6 +1,13 @@
 import GlowCard from "../../components/GlowCard";
 
+
+
 function OrdersIndex() {
+
+  const currentUserOrders = () => {
+    
+  }
+
   return (
     <div className="flex flex-wrap gap-24 items-start justify-center py-8">
       <GlowCard>
