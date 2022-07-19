@@ -26,6 +26,7 @@ const Cart = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          authorization: `Bearer ${sessionStorage.token}`,
         },
         body: JSON.stringify({
           items: JSON.parse(localStorage.cart),
@@ -61,7 +62,7 @@ const Cart = () => {
           {cart.map((cartItem, i) => {
             return (
               <li key={i}>
-                {cartItem.name}, {cartItem.quantity}
+                {cartItem.name}, {cartItem.quantity}, {`$${cartItem.price / 100}`}
                 {/* <Button onClick={() => increase(i)}>+</Button>
                 <Button onClick={() => decrease(i)}>-</Button> */}
               </li>
