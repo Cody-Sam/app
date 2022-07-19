@@ -33,7 +33,7 @@ function ShopItemPage() {
     if (foundItem) {
       foundItem.quantity++
     } else {
-      setCart([...cart, { _id: product._id, quantity: 1, name: product.name }]);
+      setCart([...cart, { _id: product._id, quantity: 1, name: product.name, price: product.price }]);
      }
      localStorage.cart = JSON.stringify(cart)
    };
@@ -43,7 +43,7 @@ function ShopItemPage() {
   return (
     <div>
       <h1>{product.name}</h1>
-      <div>{`$${product.price}`}</div>
+      <div>{`$${product.price / 100}`}</div>
       <div>{product.description}</div>
       <Button onClick={addToCart}>Add to Cart</Button>
     </div>
