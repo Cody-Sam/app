@@ -9,7 +9,13 @@ function Layout() {
     <div className="relative min-h-screen text-white">
       <div className="relative flex h-screen bg-black">
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
-        <ContentWrapper.Page>
+        <div className="w-full flex-1 h-[49px] border-b bg-slate-500 z-50">
+          PC Builder
+          {!sidebarOpen && (
+            <input className="w-full" placeholder="Search Terms"></input>
+          )}
+        </div>
+        <ContentWrapper.Page focus={!sidebarOpen}>
           <Outlet />
         </ContentWrapper.Page>
       </div>
