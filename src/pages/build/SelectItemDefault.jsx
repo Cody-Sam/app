@@ -7,6 +7,7 @@ import Card from "components/Card";
 function SelectItemDefault({ products }) {
   const { page, setPage, build, buildDispatch } = useContext(BuildContext);
   const filteredProducts = products.filter((p) => (p.type == page));
+
   return (
     <ContentWrapper.Grid>
       {filteredProducts.map((product) => {

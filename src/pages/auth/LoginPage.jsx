@@ -18,7 +18,7 @@ function LoginPage() {
   async function login(event) {
     event.preventDefault();
     const credentials = { email: email, password: password };
-    const res = await fetch("http://localhost:4000/api/v1/users/login", {
+    const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/users/login`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(credentials),
