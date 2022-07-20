@@ -15,9 +15,9 @@ function Card({ padding=8, children }) {
     <div className="bg-black ring ring-white rounded-lg flex flex-col md:flex-row overflow-hidden">
       {media && <div className="h-64 w-auto">{media}</div>}
       <div className={`w-full py-${padding/2} px-${padding} flex flex-col justify-between`}>
-        {header && <div className="h-full">{header}</div>}
+        {header && <div className="h-full border-b">{header}</div>}
         <div className="">{body}</div>
-        {footer && <div>{footer}</div>}
+        {footer && <div className="border-t">{footer}</div>}
       </div>
     </div>
   );

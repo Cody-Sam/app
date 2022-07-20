@@ -17,6 +17,7 @@ import {
   Orders,
   Shop,
 } from "./pages";
+import WishList from "./pages/wishlist/WishList";
 
 function App() {
   const [userStore, userDispatch] = useReducer(userReducer, {
@@ -87,6 +88,7 @@ function App() {
             {/* Builder Routes */}
             <Route path="build">
               <Route index element={<Build />} />
+              <Route path="item/:item" element={<Shop.Item build={true} />} />
             </Route>
 
             {/* Cart And Checkout Routes */}
@@ -112,6 +114,8 @@ function App() {
               <Route index element={<Orders />} />
               <Route path=":id" element={<Orders.Show />} />
             </Route>
+
+            <Route path="wishlist" element={<WishList />} />
 
             {/* Shop Routes */}
             <Route path="shop">
