@@ -88,6 +88,7 @@ function App() {
             {/* Builder Routes */}
             <Route path="build">
               <Route index element={<Build />} />
+              <Route path="item/:item" element={<Shop.Item />} />
             </Route>
 
             {/* Cart And Checkout Routes */}
