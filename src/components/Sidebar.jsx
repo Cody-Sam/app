@@ -19,7 +19,6 @@ function Sidebar() {
   const { userStore, userDispatch } = useContext(UserContext);
   const location = useLocation();
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const admin = location.pathname.split("/")[1] == "admin";
 
