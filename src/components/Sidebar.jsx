@@ -15,11 +15,10 @@ import {
 } from "react-icons/md";
 import { UserContext } from "modules/user";
 
-function Sidebar() {
+function Sidebar({sidebarOpen, setSidebarOpen}) {
   const { userStore, userDispatch } = useContext(UserContext);
   const location = useLocation();
   const navigate = useNavigate();
-  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   const admin = location.pathname.split("/")[1] == "admin";
 
@@ -94,9 +93,9 @@ function Sidebar() {
         <MenuItem name="Shop" path="shop">
           <MdStore size="2em" />
         </MenuItem>
-        <MenuItem name="Shopping Cart" path="cart">
+        {!(userStore.user && userStore.user.admin) && <MenuItem name="Shopping Cart" path="cart">
           <MdShoppingCart size="2em" />
-        </MenuItem>
+        </MenuItem>}
       </>
     );
   }

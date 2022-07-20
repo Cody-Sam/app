@@ -17,12 +17,10 @@ import {
   Orders,
   Shop,
 } from "./pages";
-import OrdersIndex from "./pages/orders/OrdersIndex";
-import ShowOrder from "./pages/orders/ShowOrder";
 
 function App() {
   const [userStore, userDispatch] = useReducer(userReducer, {
-    status: sessionStorage.getItem("token") ? "pending" :"unauthenticated",
+    status: sessionStorage.getItem("token") ? "pending" : "unauthenticated",
     user: null,
     token: sessionStorage.getItem("token"),
   });
@@ -105,18 +103,15 @@ function App() {
             <Route
               path="orders"
               element={
-                <OrdersIndex />
-                // <ProtectedRoute.LoggedIn>
-                //   <Orders />
-                // </ProtectedRoute.LoggedIn>
+                <ProtectedRoute.LoggedIn
+                  user={userStore.user}
+                  status={userStore.status}
+                />
               }
-            />
-            <Route
-              path="orders/:id"
-              element={
-                <ShowOrder />
-              }
-            />
+            >
+              <Route index element={<Orders />} />
+              <Route path=":id" element={<Orders.Show />} />
+            </Route>
 
             {/* Shop Routes */}
             <Route path="shop">
