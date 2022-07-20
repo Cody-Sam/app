@@ -88,7 +88,6 @@ const CreateProduct = () => {
     };
   };
   const handleImage = (e) => {
-    e.preventDefault();
     const file = e.target.files[0];
     setFileToBase(file);
   };
@@ -110,6 +109,7 @@ const CreateProduct = () => {
       headers: {
         "Content-Type": "application/json",
         authorization: `Bearer ${userStore.token}`,
+
       },
       body: JSON.stringify(productData),
     });
@@ -245,6 +245,7 @@ const CreateProduct = () => {
                   })}
                 </>
               )}
+
 
               <FormLabel htmlFor="image" label="Product Image" />
               <FormInput name="image" type="file" onChange={handleImage} />
