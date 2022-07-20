@@ -9,7 +9,7 @@ const ShowOrder = () => {
     const { id } = useParams()
     
     const getOrder = async () => {
-      const res = await fetch(`http://localhost:4000/api/v1/orders/${id}`, {
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/orders/${id}`, {
         method: "GET",
         headers: {
           "Content-Type": "application/json",

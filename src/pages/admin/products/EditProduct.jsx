@@ -10,7 +10,7 @@ function EditProduct() {
   const { item } = useParams();
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch(`http://localhost:4000/api/v1/products/${item}`);
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/products/${item}`);
       const data = await res.json();
       setProduct(data);
     }

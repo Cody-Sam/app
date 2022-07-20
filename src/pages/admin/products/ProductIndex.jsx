@@ -7,7 +7,7 @@ function ProductIndex() {
   let [products, setProducts] = useState([]);
   useEffect(() => {
     async function fetchData() {
-      const res = await fetch("http://localhost:4000/api/v1/products");
+      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/products`);
       const data = await res.json();
       setProducts(data);
     }
