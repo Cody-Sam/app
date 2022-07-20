@@ -1,19 +1,11 @@
+import { useContext } from "react";
 import ContentWrapper from "components/ContentWrapper";
 import Card from "components/Card";
-import { Link } from "react-router-dom";
+import { parts } from "modules/parts";
+import { BuildContext } from "modules/build";
 
-function BuilderOverview({ page, setPage, build, setBuild }) {
-  const parts = [
-    {name:"Case", slug:"case"},
-    {name:"Processor", slug:"cpu"},
-    {name:"Graphics Processor", slug:"gpu"},
-    {name:"Motherboard", slug:"motherboard"},
-    {name:"Memory", slug:"ram"},
-    {name:"Storage", slug:"storage"},
-    {name:"Case Cooling", slug:"case-cooling"},
-    {name:"Processor Cooler", slug:"cpu-cooler"},
-    {name:"Power Supply", slug:"psu"},
-  ];
+function BuilderOverview() {
+  const { page, setPage, build, setBuild } = useContext(BuildContext);
   return (
     <ContentWrapper.Grid>
       {parts.map((part) => {
@@ -24,6 +16,7 @@ function BuilderOverview({ page, setPage, build, setBuild }) {
             <Card.Footer>
               <button
                 onClick={() => {
+                  console.log(part.slug)
                   setPage(part.slug);
                 }}
               >

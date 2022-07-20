@@ -114,9 +114,9 @@ const parts = [
     sockets: [motherboard, CPU, PCI, RAM, storage],
   },
   { name: "Memory", slug: "ram", sockets: [RAM] },
-  { name: "storage", slug: "storage", sockets: [storage, driveBay] },
-  { name: "Case Cooling", slug: "case-cooling", sockets: [fanMount] },
-  { name: "Processor Cooler", slug: "cpu-cooler", sockets: [CPU, fanMount] },
+  { name: "Storage", slug: "storage", sockets: [storage, driveBay] },
+  { name: "Case Cooling", slug: "case_cooling", sockets: [fanMount] },
+  { name: "Processor Cooler", slug: "cpu_cooler", sockets: [CPU, fanMount] },
   { name: "Power Supply", slug: "psu", sockets: [PSU] },
 ];
 

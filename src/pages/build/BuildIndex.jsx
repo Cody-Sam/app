@@ -1,4 +1,10 @@
-import { useState } from "react";
+import { useReducer, useState } from "react";
+import {
+  buildInit,
+  buildReducer,
+  initialState,
+  BuildContext,
+} from "modules/build";
 
 import BuilderOverview from "./BuilderOverview";
 import CasePage from "./CasePage";
@@ -10,103 +16,30 @@ import MotherboardPage from "./MotherboardPage";
 import PSUPage from "./PSUPage";
 import RAMPage from "./RAMPage";
 import StoragePage from "./StoragePage";
+import SelectItemDefault from "./SelectItemDefault";
 
 function BuildIndex() {
   const [page, setPage] = useState("overview");
-  const [build, setBuild] = useState({ case: null });
-  switch (page) {
-    case "overview":
-      return (
-        <BuilderOverview
-          page={page}
-          setPage={setPage}
-          build={build}
-          setBuild={setBuild}
-        />
-      );
-    case "case-cooling":
-      return (
-        <CaseCoolingPage
-          page={page}
-          setPage={setPage}
-          build={build}
-          setBuild={setBuild}
-        />
-      );
-    case "case":
-      return (
-        <CasePage
-          page={page}
-          setPage={setPage}
-          build={build}
-          setBuild={setBuild}
-        />
-      );
-    case "cpu-cooler":
-      return (
-        <CPUCoolerPage
-          page={page}
-          setPage={setPage}
-          build={build}
-          setBuild={setBuild}
-        />
-      );
-    case "cpu":
-      return (
-        <CPUPage
-          page={page}
-          setPage={setPage}
-          build={build}
-          setBuild={setBuild}
-        />
-      );
-    case "gpu":
-      return (
-        <GPUPage
-          page={page}
-          setPage={setPage}
-          build={build}
-          setBuild={setBuild}
-        />
-      );
+  const [build, buildDispatch] = useReducer(
+    buildReducer,
+    initialState,
+    buildInit
+  );
 
-    case "motherboard":
-      return (
-        <MotherboardPage
-          page={page}
-          setPage={setPage}
-          build={build}
-          setBuild={setBuild}
-        />
-      );
-    case "psu":
-      return (
-        <PSUPage
-          page={page}
-          setPage={setPage}
-          build={build}
-          setBuild={setBuild}
-        />
-      );
-    case "ram":
-      return (
-        <RAMPage
-          page={page}
-          setPage={setPage}
-          build={build}
-          setBuild={setBuild}
-        />
-      );
-    case "storage":
-      return (
-        <StoragePage
-          page={page}
-          setPage={setPage}
-          build={build}
-          setBuild={setBuild}
-        />
-      );
+  function Page() {
+    switch (page) {
+      default:
+        return <SelectItemDefault  />;
+      case "overview":
+        return <BuilderOverview />;
+    }
   }
+
+  return (
+    <BuildContext.Provider value={{ page, setPage, build, buildDispatch }}>
+      <Page />
+    </BuildContext.Provider>
+  );
 }
 
 export default BuildIndex;
