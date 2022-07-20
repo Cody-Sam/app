@@ -80,6 +80,7 @@ function App() {
                 <Route path="products">
                   <Route index element={<Admin.Products />} />
                   <Route path="new" element={<Admin.Products.New />} />
+                  <Route path="edit/:item" element={<Admin.Products.Edit />} />
                 </Route>
               </Route>
 
