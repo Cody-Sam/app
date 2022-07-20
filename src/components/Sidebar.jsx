@@ -15,7 +15,7 @@ import {
 } from "react-icons/md";
 import { UserContext } from "modules/user";
 
-function Sidebar() {
+function Sidebar({sidebarOpen, setSidebarOpen}) {
   const { userStore, userDispatch } = useContext(UserContext);
   const location = useLocation();
   const navigate = useNavigate();
