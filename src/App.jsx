@@ -88,6 +88,7 @@ function App() {
             {/* Builder Routes */}
             <Route path="build">
               <Route index element={<Build />} />
+              <Route path="item/:item" element={<Shop.Item build={true} />} />
             </Route>
 
             {/* Cart And Checkout Routes */}
@@ -114,11 +115,7 @@ function App() {
               <Route path=":id" element={<Orders.Show />} />
             </Route>
 
-           <Route
-            path="wishlist"
-            element={
-              <WishList />}
-                />
+            <Route path="wishlist" element={<WishList />} />
 
             {/* Shop Routes */}
             <Route path="shop">

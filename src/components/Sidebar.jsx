@@ -12,10 +12,11 @@ import {
   MdLogout,
   MdProductionQuantityLimits,
   MdAdminPanelSettings,
+  MdHome,
 } from "react-icons/md";
 import { UserContext } from "modules/user";
 
-function Sidebar({sidebarOpen, setSidebarOpen}) {
+function Sidebar({ sidebarOpen, setSidebarOpen }) {
   const { userStore, userDispatch } = useContext(UserContext);
   const location = useLocation();
   const navigate = useNavigate();
@@ -24,15 +25,16 @@ function Sidebar({sidebarOpen, setSidebarOpen}) {
 
   function MenuItem({ name, children, path }) {
     return (
-          <NavLink
+      <NavLink
         className={({ isActive }) => (isActive ? "text-green-500" : "")}
-        to={path} onClick={() => sidebarOpen && setSidebarOpen(!sidebarOpen)}
-          >
+        to={path}
+        onClick={() => sidebarOpen && setSidebarOpen(!sidebarOpen)}
+      >
         <div className={`flex w-full`}>
-            {children}
+          {children}
           {sidebarOpen && <span className="pl-2 my-auto">{name}</span>}
         </div>
-          </NavLink>
+      </NavLink>
     );
   }
 
@@ -62,16 +64,14 @@ function Sidebar({sidebarOpen, setSidebarOpen}) {
           }}
         >
           {sidebarOpen ? (
-            <MdMenuOpen size={"3rem"} />
+            <div className="flex">
+              <MdMenuOpen size={"3rem"} />
+              <p className="my-auto">Close Menu</p>
+            </div>
           ) : (
             <MdMenu size={"3rem"} />
           )}
         </button>
-        {sidebarOpen && (
-          <NavLink to="/" className="my-auto">
-            PC Store
-          </NavLink>
-        )}
       </div>
     );
   }
@@ -87,15 +87,20 @@ function Sidebar({sidebarOpen, setSidebarOpen}) {
   function StoreNavLinks() {
     return (
       <>
+        <MenuItem name="Home" path="/">
+          <MdHome size="2em" />
+        </MenuItem>
         <MenuItem name="Build A PC" path="build">
           <MdDesktopWindows size="2em" />
         </MenuItem>
         <MenuItem name="Shop" path="shop">
           <MdStore size="2em" />
         </MenuItem>
-        {!(userStore.user && userStore.user.admin) && <MenuItem name="Shopping Cart" path="cart">
-          <MdShoppingCart size="2em" />
-        </MenuItem>}
+        {!(userStore.user && userStore.user.admin) && (
+          <MenuItem name="Shopping Cart" path="cart">
+            <MdShoppingCart size="2em" />
+          </MenuItem>
+        )}
       </>
     );
   }
