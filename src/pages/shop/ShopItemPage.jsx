@@ -1,5 +1,5 @@
 import { useState, useEffect } from "react";
-import { useParams } from "react-router-dom";
+import { Navigate, useParams, Link } from "react-router-dom";
 import styled from "styled-components";
 import tw from "twin.macro";
 
@@ -15,7 +15,7 @@ const Button = styled.button`
     `}
 `;
 
-function ShopItemPage() {
+function ShopItemPage({ build = false}) {
   const [product, setProduct] = useState({});
   const { item } = useParams();
   useEffect(() => {
@@ -96,7 +96,8 @@ function ShopItemPage() {
       <h1>{product.name}</h1>
       <div>{`$${product.price / 100}`}</div>
       <div>{product.description}</div>
-      <Button onClick={addToCart}>Add to Cart</Button>
+      {build ? <Link to="/build" page={product.type} >Back</Link> : <Button onClick={addToCart}>Add to Cart</Button> }
+      
       <Button onClick={wishListToggle}>{wishListButtonText}</Button>
     </div>
   );

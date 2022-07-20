@@ -1,9 +1,9 @@
 import ContentWrapper from "components/ContentWrapper";
 import Card from "components/Card";
 import { useState, useEffect, useContext } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import { BuildContext } from "modules/build";
-function CasePage() {
+function SelectItemDefault() {
   const { page, setPage, build, buildDispatch } = useContext(BuildContext);
   const [products, setProducts] = useState([]);
   useEffect(() => {
@@ -14,6 +14,7 @@ function CasePage() {
     }
     fetchData();
   }, []);
+  console.log(page);
   return (
     <ContentWrapper.Grid>
       {products.map((product) => {
@@ -28,12 +29,13 @@ function CasePage() {
               <Link to={`item/${product._id}`}>View Item</Link> |{" "}
               <button
                 type="button"
-                onClick={() =>
+                onClick={() => {
                   buildDispatch({
                     type: "setItem",
                     data: { type: page, value: product._id },
-                  })
-                }
+                  });
+                  setPage("overview")
+                }}
               >
                 Add to build
               </button>
@@ -45,4 +47,4 @@ function CasePage() {
   );
 }
 
-export default CasePage;
+export default SelectItemDefault;
