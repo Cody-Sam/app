@@ -100,7 +100,15 @@ function App() {
             </Route>
 
             {/* Orders Routes */}
-            <Route path="orders" element={<ProtectedRoute.LoggedIn />}>
+            <Route
+              path="orders"
+              element={
+                <ProtectedRoute.LoggedIn
+                  user={userStore.user}
+                  status={userStore.status}
+                />
+              }
+            >
               <Route index element={<Orders />} />
               <Route path=":id" element={<Orders.Show />} />
             </Route>
