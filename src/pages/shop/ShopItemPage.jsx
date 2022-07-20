@@ -1,5 +1,7 @@
 import { useState, useEffect } from "react";
 import { Navigate, useParams, Link } from "react-router-dom";
+import Card from "components/Card";
+import ContentWrapper from "components/ContentWrapper";
 import styled from "styled-components";
 import tw from "twin.macro";
 
@@ -92,20 +94,28 @@ function ShopItemPage({ build = false }) {
   }, [wishList]);
 
   return (
-    <div>
-      <h1>{product.name}</h1>
-      <div>{`$${product.price / 100}`}</div>
-      <div>{product.description}</div>
-      {build ? (
-        <Link to="/build" state={{ page: product.type }}>
-          Back
-        </Link>
-      ) : (
-        <Button onClick={addToCart}>Add to Cart</Button>
-      )}
-
-      <Button onClick={wishListToggle}>{wishListButtonText}</Button>
-    </div>
+    <ContentWrapper.Flex>
+      <Card>
+        <Card.Media src={product.image.url}/>
+        <Card.Header>
+          <p className="text-xl">{product.name}</p>
+        </Card.Header>
+        <Card.Body>
+          <div>{product.description}</div>
+          <div>{`$${product.price / 100}`}</div>
+        </Card.Body>
+        <Card.Footer>
+          {build ? (
+            <Link to="/build" state={{ page: product.type }}>
+              Back
+            </Link>
+          ) : (
+            <Button onClick={addToCart}>Add to Cart </Button>
+          )}{" "}
+          | <button onClick={wishListToggle}>{wishListButtonText}</button>
+        </Card.Footer>
+      </Card>
+    </ContentWrapper.Flex>
   );
 }
 export default ShopItemPage;
