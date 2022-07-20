@@ -16,6 +16,7 @@ const Button = styled.button`
 `;
 
 function ShopItemPage() {
+
   const [product, setProduct] = useState({});
   const { item } = useParams();
   useEffect(() => {
@@ -47,6 +48,8 @@ function ShopItemPage() {
       ]);
     }
   };
+
+
 
   const saveCartToStorage = () => {
     localStorage.cart = JSON.stringify(cart);

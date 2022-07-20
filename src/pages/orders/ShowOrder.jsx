@@ -1,9 +1,10 @@
 import React, { useEffect, useState } from 'react'
-import { useParams } from 'react-router-dom'
+import { Link, useParams } from 'react-router-dom'
+import ReviewItem from './ReviewItem'
 
 const ShowOrder = () => {
 
-    const [order, setOrder] = useState([])
+    const [order, setOrder] = useState()
 
     const { id } = useParams()
     
@@ -15,18 +16,39 @@ const ShowOrder = () => {
           authorization: `Bearer ${sessionStorage.token}`,
         },
       });
-        const orderRes = await res.json();
-        console.log(orderRes)
-        setOrder(orderRes)
+      const ordersRes = await res.json();
+      setOrder(ordersRes);
     };
+
+
+    
+    const [showReview, setShowReview] = useState([false, 0])
 
     useEffect(() => {
       getOrder();
     }, []);
 
-  return (
-    <div>{order[0]._id}</div>
-  )
+    return (
+      <div className="test">
+        {order &&
+          order.map((order, i) => {
+            return (
+              <div key={i}>
+                <h1>ORDER {order._id}</h1>
+                {order.products.map((product, i) => {
+                    return (
+                        <div key={i}>
+                            <h2>{product.name}</h2>
+                            <button onClick={() => setShowReview([!showReview[0], i])}>Review Item</button>
+                        {(showReview[0] && showReview[1] == i) && <ReviewItem product={product} />}
+                    </div>
+                  );
+                })}
+              </div>
+            );
+          })}
+      </div>
+    );
 }
 
 export default ShowOrder
