@@ -62,7 +62,7 @@ function ProductForm({ product, method, setFormState }) {
       image: method == "PUT" ? product.image : image,
     };
     console.log(productData);
-    const res = await fetch("http://localhost:4000/api/v1/products", {
+    const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/products`, {
       method: method,
       headers: {
         "Content-Type": "application/json",
