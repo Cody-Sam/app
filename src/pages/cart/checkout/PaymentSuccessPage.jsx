@@ -8,21 +8,20 @@ const PaymentSuccessPage = () => {
 
 
   const getPurchase = async () => {
-    fetch("http://localhost:4000/api/v1/orders/purchase", {
+    fetch(`${import.meta.env.VITE_SERVER_URL}/orders/purchase`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
         authorization: `Bearer ${sessionStorage.token}`,
       },
-    })
-      .then((res) => {
-        if (res.ok) {
-          res.json().then((data) => {
-            setOrder(data)
-            setItems(data.products)
-          })
-        }
-      })
+    }).then((res) => {
+      if (res.ok) {
+        res.json().then((data) => {
+          setOrder(data);
+          setItems(data.products);
+        });
+      }
+    });
   }
 
   useEffect(() => {

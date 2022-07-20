@@ -9,17 +9,16 @@ const WishList = () => {
     const [products, setProducts] = useState([])
     
     const getItems = async () => {
-        const res = await fetch("http://localhost:4000/api/v1/products/watchlist", {
-        method: "POST",
-        headers: {
-          "Content-Type": "application/json",
-        },
-        body: JSON.stringify(
-          [
-    ...wishList
-  ]
-        ),
-      })
+        const res = await fetch(
+          `${import.meta.env.VITE_SERVER_URL}/products/watchlist`,
+          {
+            method: "POST",
+            headers: {
+              "Content-Type": "application/json",
+            },
+            body: JSON.stringify([...wishList]),
+          }
+        );
         const data = await res.json()
         setProducts(data)
     };
