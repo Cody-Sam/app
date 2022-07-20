@@ -93,9 +93,9 @@ function Sidebar({sidebarOpen, setSidebarOpen}) {
         <MenuItem name="Shop" path="shop">
           <MdStore size="2em" />
         </MenuItem>
-        <MenuItem name="Shopping Cart" path="cart">
+        {!(userStore.user && userStore.user.admin) && <MenuItem name="Shopping Cart" path="cart">
           <MdShoppingCart size="2em" />
-        </MenuItem>
+        </MenuItem>}
       </>
     );
   }
