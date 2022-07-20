@@ -14,21 +14,39 @@ const Submit = styled.button`
     `}
 `;
 
-const FormInput = ({ name, value, type, placeholder, onChange }) => {
+const FormInput = ({ name, value, placeholder, onChange }) => {
   return (
     <input
       className="w-full h-6 bg-black ring rounded"
       name={name}
       value={value}
-      type={type}
       placeholder={placeholder}
-      onChange={(e) => {
-        type == "file" && onChange(e);
-        onChange(type == "number" ? Number(e.target.value) : e.target.value);
-      }}
+      onChange={(event) => onChange(event.target.value)}
     ></input>
   );
 };
+function FormNumber({ name, value, onChange }) {
+  return (
+    <input
+      className="w-full h-6 bg-black ring rounded"
+      name={name}
+      value={value}
+      type="number"
+      onChange={(event) => onChange(Number(event.target.value))}
+    ></input>
+  );
+}
+function FormFile({ name, value, onChange }) {
+  return (
+    <input
+      className="w-full h-6 bg-black ring rounded"
+      name={name}
+      value={value}
+      type="file"
+      onChange={(event) => onChange(event)}
+    ></input>
+  );
+}
 
 const FormSelect = ({
   name,
@@ -119,10 +137,12 @@ const CreateProduct = () => {
     if (res.status === 201) {
       const url = data.url.split("/").splice(-1);
       console.log(url);
-      const prompt = window.confirm("Would you like to go to this items shop page?");
-      if(prompt){
+      const prompt = window.confirm(
+        "Would you like to go to this items shop page?"
+      );
+      if (prompt) {
         navigate(`/shop/item/${url}`);
-      }else{
+      } else {
         navigate("/admin/products/new");
       }
     }
@@ -168,17 +188,11 @@ const CreateProduct = () => {
               />
 
               <FormLabel htmlFor="price" label="Price" />
-              <FormInput
-                name="price"
-                type="number"
-                value={price}
-                onChange={setPrice}
-              />
+              <FormNumber name="price" value={price} onChange={setPrice} />
 
               <FormLabel htmlFor="quantity" label="Stock Quantity" />
-              <FormInput
+              <FormNumber
                 name="quantity"
-                type="number"
                 value={quantity}
                 onChange={setQuantity}
               />
@@ -248,7 +262,7 @@ const CreateProduct = () => {
 
 
               <FormLabel htmlFor="image" label="Product Image" />
-              <FormInput name="image" type="file" onChange={handleImage} />
+              <FormFile name="image" onChange={handleImage} />
               <Submit type="submit">Create</Submit>
             </form>
           </Card.Body>
@@ -257,9 +271,11 @@ const CreateProduct = () => {
     );
   } else if (formState === "pending") {
     return (
-      <Card>
-        <Card.Body>Please Wait...</Card.Body>
-      </Card>
+      <ContentWrapper.Flex>
+        <Card>
+          <Card.Body>Please Wait...</Card.Body>
+        </Card>
+      </ContentWrapper.Flex>
     );
   }
 };
