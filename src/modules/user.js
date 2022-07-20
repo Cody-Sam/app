@@ -22,7 +22,7 @@ const fetchUser = async (store,dispatch) => {
   let token = store.token;
   if (token) {
     dispatch({ type: "setStatus", data: { status: "pending" } });
-    const res = await fetch("http://localhost:4000/api/v1/users/me", {
+    const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/users/me`, {
       headers: { authorization: "Bearer " + token },
     });
     const user = await res.json();
