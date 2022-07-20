@@ -8,7 +8,7 @@ function Layout() {
   return (
     <div className="relative min-h-screen text-white">
       <div className="relative flex h-screen bg-black">
-        <Sidebar sidebarOpen={sidebarOpen} setSideBarOpen={setSidebarOpen} />
+        <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <ContentWrapper.Page>
           <Outlet />
         </ContentWrapper.Page>
