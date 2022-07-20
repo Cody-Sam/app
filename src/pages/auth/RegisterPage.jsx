@@ -24,7 +24,7 @@ function RegisterPage() {
       password: password,
       admin: true
     };
-    const res = await fetch("http://localhost:4000/api/v1/users/", {
+    const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/users/`, {
       method: "POST",
       headers: { "Content-Type": "application/json" },
       body: JSON.stringify(newUser),

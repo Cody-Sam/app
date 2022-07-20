@@ -9,14 +9,17 @@ const ReviewItem = ({product}) => {
       stars: stars,
       comment: comment,
     };
-    const res = await fetch("http://localhost:4000/api/v1/products/review", {
-      method: "POST",
-      headers: {
-        "Content-Type": "application/json",
-        authorization: `Bearer ${sessionStorage.token}`,
-      },
-      body: JSON.stringify({ _id: product._id, review: review }),
-    });
+    const res = await fetch(
+      `${import.meta.env.VITE_SERVER_URL}/products/review`,
+      {
+        method: "POST",
+        headers: {
+          "Content-Type": "application/json",
+          authorization: `Bearer ${sessionStorage.token}`,
+        },
+        body: JSON.stringify({ _id: product._id, review: review }),
+      }
+    );
     const status = await res.json();
   };
   return (

@@ -22,7 +22,7 @@ const Cart = () => {
     );
 
     const createCheckout = () => {
-      fetch("http://localhost:4000/api/v1/checkout/create", {
+      fetch(`${import.meta.env.VITE_SERVER_URL}/checkout/create`, {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
