@@ -13,10 +13,10 @@ const CPU = {
   name: "CPU Socket",
   slug: "cpu",
   options: [
-    { name: "AMD AM2", slug: "cpu_amd2" },
-    { name: "AMD AM2+", slug: "cpu_amd2+" },
-    { name: "AMD AM3", slug: "cpu_amd3" },
-    { name: "AMD AM3+", slug: "cpu_amd3+" },
+    { name: "AMD AM2", slug: "cpu_am2" },
+    { name: "AMD AM2+", slug: "cpu_am2+" },
+    { name: "AMD AM3", slug: "cpu_am3" },
+    { name: "AMD AM3+", slug: "cpu_am3+" },
     { name: "AMD AM4", slug: "cpu_am4" },
     { name: "AMD FM1", slug: "cpu_fm1" },
     { name: "AMD FM2", slug: "cpu_fm2" },
@@ -58,7 +58,7 @@ const RAM = {
 };
 
 const storage = {
-  name: "storage Ports",
+  name: "Storage Ports",
   slug: "storage",
   options: [
     { name: "SATA2", slug: "storage_sata2" },
