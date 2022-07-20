@@ -4,23 +4,25 @@ import Card from "components/Card";
 import { parts } from "modules/parts";
 import { BuildContext } from "modules/build";
 
-function BuilderOverview() {
+function BuilderOverview({ products }) {
   const { page, setPage, build, setBuild } = useContext(BuildContext);
   return (
     <ContentWrapper.Grid>
       {parts.map((part) => {
+        const product = products.find(
+          (element) => element._id == build[part.slug]
+        );
         return (
           <Card key={part.name}>
             <Card.Header>{part.name}</Card.Header>
-            <Card.Body>{build[part.slug]}</Card.Body>
+            <Card.Body>{product && product.name}</Card.Body>
             <Card.Footer>
               <button
                 onClick={() => {
-                  console.log(part.slug)
                   setPage(part.slug);
                 }}
               >
-                Add {part.name}
+                Select {part.name}
               </button>
             </Card.Footer>
           </Card>

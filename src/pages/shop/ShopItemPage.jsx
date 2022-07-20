@@ -15,8 +15,7 @@ const Button = styled.button`
     `}
 `;
 
-function ShopItemPage({ build = false}) {
-
+function ShopItemPage({ build = false }) {
   const [product, setProduct] = useState({});
   const { item } = useParams();
   useEffect(() => {
@@ -48,8 +47,6 @@ function ShopItemPage({ build = false}) {
       ]);
     }
   };
-
-
 
   const saveCartToStorage = () => {
     localStorage.cart = JSON.stringify(cart);
@@ -99,8 +96,14 @@ function ShopItemPage({ build = false}) {
       <h1>{product.name}</h1>
       <div>{`$${product.price / 100}`}</div>
       <div>{product.description}</div>
-      {build ? <Link to="/build" page={product.type} >Back</Link> : <Button onClick={addToCart}>Add to Cart</Button> }
-      
+      {build ? (
+        <Link to="/build" state={{ page: product.type }}>
+          Back
+        </Link>
+      ) : (
+        <Button onClick={addToCart}>Add to Cart</Button>
+      )}
+
       <Button onClick={wishListToggle}>{wishListButtonText}</Button>
     </div>
   );

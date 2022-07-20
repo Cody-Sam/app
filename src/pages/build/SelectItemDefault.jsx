@@ -1,23 +1,15 @@
-import ContentWrapper from "components/ContentWrapper";
-import Card from "components/Card";
-import { useState, useEffect, useContext } from "react";
+import { useContext } from "react";
 import { Link, useNavigate } from "react-router-dom";
 import { BuildContext } from "modules/build";
-function SelectItemDefault() {
+import ContentWrapper from "components/ContentWrapper";
+import Card from "components/Card";
+
+function SelectItemDefault({ products }) {
   const { page, setPage, build, buildDispatch } = useContext(BuildContext);
-  const [products, setProducts] = useState([]);
-  useEffect(() => {
-    async function fetchData() {
-      const res = await fetch("http://localhost:4000/api/v1/products");
-      const data = await res.json();
-      setProducts(data.filter((product) => product.type === page));
-    }
-    fetchData();
-  }, []);
-  console.log(page);
+  const filteredProducts = products.filter((p) => (p.type == page));
   return (
     <ContentWrapper.Grid>
-      {products.map((product) => {
+      {filteredProducts.map((product) => {
         return (
           <Card key={product._id}>
             {product.image && <Card.Media src={product.image.url} />}
@@ -34,7 +26,7 @@ function SelectItemDefault() {
                     type: "setItem",
                     data: { type: page, value: product._id },
                   });
-                  setPage("overview")
+                  setPage("overview");
                 }}
               >
                 Add to build
