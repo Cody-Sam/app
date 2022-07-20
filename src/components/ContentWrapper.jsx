@@ -2,11 +2,14 @@ function ContentWrapper() {
   return null;
 }
 
-function PageWrapper({ focus, children }) {
+function PageWrapper({ onClick, focus, children }) {
   return (
     <>
       {!focus && (
-        <div className="absolute left-12 right-0 top-0 bottom-0 overflow-x-hidden bg-black/70 blur-sm z-40"></div>
+        <div
+          onClick={onClick}
+          className="absolute left-12 right-0 top-0 bottom-0 overflow-x-hidden bg-black/70 blur-sm z-40"
+        ></div>
       )}
       <div className="absolute left-12 right-0 top-12 bottom-0 overflow-x-hidden z-20">
         {children}

@@ -15,7 +15,10 @@ function Layout() {
             <input className="w-full" placeholder="Search Terms"></input>
           )}
         </div>
-        <ContentWrapper.Page focus={!sidebarOpen}>
+        <ContentWrapper.Page
+          onClick={() => setSidebarOpen(false)}
+          focus={!sidebarOpen}
+        >
           <Outlet />
         </ContentWrapper.Page>
       </div>
