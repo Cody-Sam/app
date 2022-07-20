@@ -1,19 +1,28 @@
-import React, { useState } from "react";
-
+import { useState, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import ContentWrapper from "components/ContentWrapper";
 import Card from "components/Card";
-
 import ProductForm from "./form/ProductForm";
 
-function CreateProduct() {
+function EditProduct() {
   const [formState, setFormState] = useState("unsent");
+  const [product, setProduct] = useState({});
+  const { item } = useParams();
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch(`http://localhost:4000/api/v1/products/${item}`);
+      const data = await res.json();
+      setProduct(data);
+    }
+    fetchData();
+  }, []);
 
   if (formState === "unsent") {
     return (
       <ContentWrapper.Flex>
         <Card padding="4">
           <Card.Body>
-            <ProductForm product={{}} method="POST" setFormState={setFormState} />
+            <ProductForm product={product} method="PUT" setFormState={setFormState} />
           </Card.Body>
         </Card>
       </ContentWrapper.Flex>
@@ -29,4 +38,4 @@ function CreateProduct() {
   }
 }
 
-export default CreateProduct;
+export default EditProduct;

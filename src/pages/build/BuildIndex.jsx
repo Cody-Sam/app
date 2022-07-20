@@ -1,4 +1,5 @@
-import { useReducer, useState } from "react";
+import { useReducer, useState, useEffect } from "react";
+import { useLocation } from "react-router-dom";
 import {
   buildInit,
   buildReducer,
@@ -7,31 +8,33 @@ import {
 } from "modules/build";
 
 import BuilderOverview from "./BuilderOverview";
-import CasePage from "./CasePage";
-import CaseCoolingPage from "./CaseCoolingPage";
-import CPUCoolerPage from "./CPUCoolerPage";
-import CPUPage from "./CPUPage";
-import GPUPage from "./GPUPage";
-import MotherboardPage from "./MotherboardPage";
-import PSUPage from "./PSUPage";
-import RAMPage from "./RAMPage";
-import StoragePage from "./StoragePage";
 import SelectItemDefault from "./SelectItemDefault";
 
 function BuildIndex() {
-  const [page, setPage] = useState("overview");
+  const location = useLocation();
+  const [page, setPage] = useState((location.state && location.state.page) || "overview");
   const [build, buildDispatch] = useReducer(
     buildReducer,
     initialState,
     buildInit
   );
+  const [products, setProducts] = useState([]);
+
+  useEffect(() => {
+    async function fetchData() {
+      const res = await fetch("http://localhost:4000/api/v1/products");
+      const data = await res.json();
+      setProducts(data);
+    }
+    fetchData();
+  }, []);
 
   function Page() {
     switch (page) {
       default:
-        return <SelectItemDefault  />;
+        return <SelectItemDefault products={products} />;
       case "overview":
-        return <BuilderOverview />;
+        return <BuilderOverview products={products} />;
     }
   }
 
