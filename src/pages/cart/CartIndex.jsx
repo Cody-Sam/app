@@ -5,7 +5,7 @@ import tw from "twin.macro";
 
 const CartContainer = styled.div`
   ${tw`
-    h-screen
+    h-[75%]
     w-full
     flex
     items-center
@@ -25,7 +25,6 @@ const CartItems = styled.div`
     justify-center
     items-center
     my-5
-
   `}
 `;
 
@@ -107,6 +106,10 @@ const Cart = () => {
   );
 
   const createCheckout = () => {
+    const filteredCart = cart
+    filteredCart.forEach(item => {
+      delete item.img
+    })
     fetch(`${import.meta.env.VITE_SERVER_URL}/checkout/create`, {
       method: "POST",
       headers: {
@@ -114,7 +117,7 @@ const Cart = () => {
         authorization: `Bearer ${sessionStorage.token}`,
       },
       body: JSON.stringify({
-        items: JSON.parse(localStorage.cart),
+        items: filteredCart,
       }),
     })
       .then((res) => {

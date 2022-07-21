@@ -1,4 +1,20 @@
 import React, { useState } from "react";
+import styled from "styled-components";
+import tw from "twin.macro";
+
+const Button = styled.button`
+  ${tw`
+        bg-gray-900
+        hover:bg-red-900
+        text-white 
+        font-bold 
+        py-4 
+        px-8 
+        rounded
+        ease-in-out
+        duration-200
+    `}
+`;
 
 const ReviewItem = ({product}) => {
   const [stars, setStars] = useState("");
@@ -23,9 +39,9 @@ const ReviewItem = ({product}) => {
     const status = await res.json();
   };
   return (
-    <form onSubmit={addReview}>
+    <form className="flex flex-col items-center justify-center" onSubmit={addReview}>
       <input
-        className="text-black"
+        className="text-black "
         value={stars}
         type="Number"
         onChange={(e) => setStars(e.target.value)}
@@ -38,7 +54,7 @@ const ReviewItem = ({product}) => {
         type="Text"
         placeholder="Review"
       ></input>
-      <button type="submit">Leave A Review</button>
+      <Button type="submit">Leave A Review</Button>
     </form>
   );
 };
