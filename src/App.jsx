@@ -18,6 +18,7 @@ import {
   Orders,
   Shop,
 } from "./pages";
+
 import WishList from "./pages/wishlist/WishList";
 
 function App() {
@@ -81,6 +82,11 @@ function App() {
                   <Route index element={<Admin.Products />} />
                   <Route path="new" element={<Admin.Products.New />} />
                   <Route path="edit/:item" element={<Admin.Products.Edit />} />
+                </Route>
+
+                <Route path="orders">
+                  <Route index element={<Admin.Orders />} />
+                  <Route path=":order" element={<Admin.Orders.Process />} />
                 </Route>
               </Route>
 
