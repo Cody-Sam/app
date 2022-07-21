@@ -3,6 +3,7 @@ import { Link } from "react-router-dom";
 import styled from "styled-components";
 import tw from "twin.macro";
 import ShowOrder from "./ShowOrder";
+import format from "date-fns/format";
 
 const PageContainer = styled.div`
   ${tw`
@@ -15,9 +16,21 @@ const PageContainer = styled.div`
   `}
 `
 
-const Text = styled.h1`
+const Items = styled.div`
   ${tw`
-        text-5xl
+    flex
+    text-xl
+    justify-center
+    items-center
+    my-5
+    `}
+    `;
+    
+    const Text = styled.h1`
+    ${tw`
+    text-center
+    mx-5
+    text-lg
     border-2
     p-6
     border-gray-900
@@ -60,26 +73,38 @@ function OrdersIndex() {
     currentUserOrders()
   }, [])
 
+  const [dateStr, setDateStr] = useState([]);
+
+  const buildDateStr = async () => {
+    orders.forEach(order => {
+      const orderDate = order.createdAt;
+      const str = format(new Date(orderDate), "dd.MM.yyyy");
+
+      setDateStr([...dateStr, str]);
+    })
+  };
+  useEffect(() => {
+    buildDateStr();
+  }, [orders]);
+
 
   if (orders && orders.length > 0) {
     return (
-      <div className="test">
-        {orders && orders.map((order, i) => {
-          return (
-            <div key={i}>
-              <h1>ORDER {i + 1}</h1>
-              <Link to={`${order._id}`}>View Order</Link>
-              {order.products.map((product, i) => {
-                return (
-                  <div key={i}>
-                    <h2>{product.name}</h2>
-                  </div>
-                )
-              })}
-            </div>
-          )
-        })}
-      </div>
+      <PageContainer>
+          {orders &&
+            orders.map((order, i) => {
+              return (
+                <Items key={i}>
+                  <Text>{order._id}</Text>
+                  <Text>{dateStr[i]}</Text>
+                  <Text>${order.total}</Text>
+                  <Link to={`${order._id}`}>
+                    <Button>Order Details</Button>
+                  </Link>
+                </Items>
+              );
+            })}
+      </PageContainer>
     );
   } else {
     return (
