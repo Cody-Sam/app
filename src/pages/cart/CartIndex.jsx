@@ -1,18 +1,93 @@
 import React, { useState } from 'react'
+import { Link } from 'react-router-dom';
 import styled from 'styled-components';
 import tw from 'twin.macro';
 
+const CartContainer = styled.div`
+  ${tw`
+    h-full
+    w-full
+    flex
+    items-center
+    justify-center
+    flex-col
+  `}
+`
+const CartItems = styled.div`
+  ${tw`
+    flex
+    text-xl
+    justify-center
+    items-center
+    my-5
+  `}
+`
+
+const CartItemDetailsSection = styled.div`
+  ${tw`
+    w-52
+    items-center
+    justify-center
+    text-center
+  `}
+`
+
+const ImageContainer = styled.div`
+  ${tw`
+    mx-5
+  `}
+
+  img {
+    ${tw`
+      w-36
+    `}
+  }
+`
+
+const QtyButtonContainer = styled.div`
+  ${tw`
+
+  `}
+`
+
 const Button = styled.button`
   ${tw`
-        bg-blue-500 
-        hover:bg-blue-700 
+        bg-gray-900
+        hover:bg-red-900
+        text-white 
+        font-bold 
+        py-4 
+        px-8 
+        rounded
+        ease-in-out
+        duration-200
+    `}
+`;
+
+const QtyButtons = styled.button`
+  ${tw`
+        w-12
+        bg-gray-900
+        hover:bg-red-900
         text-white 
         font-bold 
         py-2 
         px-4 
         rounded
+        ease-in-out
+        duration-200
+        mx-1
     `}
 `;
+
+const CartText = styled.h1`
+  ${tw`
+    text-5xl
+    border-2
+    p-6
+    border-gray-900
+  `}
+`
 
 
 const Cart = () => {
@@ -51,33 +126,51 @@ const Cart = () => {
     }
     
   const decrease = (index) => {
+    console.log(cart[index].quantity);
+    if (cart[index].quantity === 1) {
+      newCart.splice(index, 1)
+      localStorage.cart = JSON.stringify(newCart);
+      setCart(JSON.parse(localStorage.cart));
+    } 
       cart[index].quantity--
       localStorage.cart = JSON.stringify(cart);
       setCart(JSON.parse(localStorage.cart));
     }
   if (cart.length > 0) {
     return (
-      <div>
-        <ul>
+      <CartContainer>
           {cart.map((cartItem, i) => {
             return (
-              <li key={i}>
-                {cartItem.name}, {cartItem.quantity}, {`$${Math.floor((cartItem.price / 100) * cartItem.quantity)}`}
-                <Button onClick={() => increase(i)}>+</Button>
-                <Button onClick={() => decrease(i)}>-</Button>
-              </li>
+              <CartItems key={i}>
+                <ImageContainer>
+                  <img src={cartItem.img} alt="" />
+                </ImageContainer>
+                <CartItemDetailsSection>{cartItem.name}</CartItemDetailsSection>
+                <CartItemDetailsSection>
+                  {cartItem.quantity}
+                </CartItemDetailsSection>
+                <CartItemDetailsSection>
+                  {`$${Math.floor((cartItem.price / 100) * cartItem.quantity)}`}
+                </CartItemDetailsSection>
+                <QtyButtonContainer>
+                  <QtyButtons onClick={() => increase(i)}>+</QtyButtons>
+                  <QtyButtons onClick={() => decrease(i)}>-</QtyButtons>
+                </QtyButtonContainer>
+              </CartItems>
             );
           })}
-        </ul>
         <Button onClick={createCheckout}>Checkout</Button>
-      </div>
+      </CartContainer>
     );
   } else {
     return (
-    <div>
-      <h1>Cart Empty</h1>
-    </div>
-    )
+      <CartContainer>
+        <CartText>Cart Empty</CartText>
+        <Link to="../../shop">
+          <Button className="mt-5">Start Shopping</Button>
+        </Link>
+      </CartContainer>
+    );
   }
 }
 
