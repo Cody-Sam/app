@@ -49,6 +49,7 @@ function ShopItemPage({ build = false }) {
           quantity: 1,
           name: product.name,
           price: product.price,
+          img: product.image.url
         },
       ]);
     }
