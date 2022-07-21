@@ -1,10 +1,46 @@
 import { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
+import styled from "styled-components";
+import tw from "twin.macro";
 import ShowOrder from "./ShowOrder";
 
+const PageContainer = styled.div`
+  ${tw`
+    h-full
+    w-full
+    flex
+    items-center
+    justify-center
+    flex-col
+  `}
+`
+
+const Text = styled.h1`
+  ${tw`
+        text-5xl
+    border-2
+    p-6
+    border-gray-900
+  `}
+`;
+
+const Button = styled.button`
+  ${tw`
+        bg-gray-900
+        hover:bg-red-900
+        text-white 
+        font-bold 
+        py-4 
+        px-8 
+        rounded
+        ease-in-out
+        duration-200
+    `}
+`;
 
 
 function OrdersIndex() {
+
 
   const [orders, setOrders] = useState()
 
@@ -17,7 +53,6 @@ function OrdersIndex() {
       },
     });
     const ordersRes = await res.json();
-    console.log(ordersRes)
     setOrders(ordersRes)
   }
 
@@ -25,25 +60,36 @@ function OrdersIndex() {
     currentUserOrders()
   }, [])
 
-  return (
-    <div className="test">
-      {orders && orders.map((order, i) => {
-        return (
-          <div key={i}>
-            <h1>ORDER {i + 1}</h1>
-            <Link to={`${order._id}`}>View Order</Link>
-            {order.products.map((product, i) => {
-              return (
-                <div key={i}>
-                  <h2>{product.name}</h2>
-                </div>
-              )
-            })}
-          </div>
-        )
-      })}
-    </div>
-  );
-}
 
+  if (orders && orders.length > 0) {
+    return (
+      <div className="test">
+        {orders && orders.map((order, i) => {
+          return (
+            <div key={i}>
+              <h1>ORDER {i + 1}</h1>
+              <Link to={`${order._id}`}>View Order</Link>
+              {order.products.map((product, i) => {
+                return (
+                  <div key={i}>
+                    <h2>{product.name}</h2>
+                  </div>
+                )
+              })}
+            </div>
+          )
+        })}
+      </div>
+    );
+  } else {
+    return (
+      <PageContainer>
+                <Text>You have made no orders</Text>
+        <Link to="../../shop">
+          <Button className="mt-5">Start Shopping</Button>
+        </Link>
+      </PageContainer>
+  )
+  }
+}
 export default OrdersIndex;
