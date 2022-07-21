@@ -19,6 +19,7 @@ const Button = styled.button`
 
 function ShopItemPage({ build = false }) {
   const [product, setProduct] = useState({});
+  const [loaded, setLoaded] = useState(false);
   const { item } = useParams();
   useEffect(() => {
     async function fetchData() {
@@ -27,6 +28,7 @@ function ShopItemPage({ build = false }) {
       );
       const data = await res.json();
       setProduct(data);
+      setLoaded(true);
     }
     fetchData();
   }, []);
@@ -97,26 +99,28 @@ function ShopItemPage({ build = false }) {
 
   return (
     <ContentWrapper.Flex>
-      <Card>
-        <Card.Media src={product.image.url}/>
-        <Card.Header>
-          <p className="text-xl">{product.name}</p>
-        </Card.Header>
-        <Card.Body>
-          <div>{product.description}</div>
-          <div>{`$${product.price / 100}`}</div>
-        </Card.Body>
-        <Card.Footer>
-          {build ? (
-            <Link to="/build" state={{ page: product.type }}>
-              Back
-            </Link>
-          ) : (
-            <Button onClick={addToCart}>Add to Cart </Button>
-          )}{" "}
-          | <button onClick={wishListToggle}>{wishListButtonText}</button>
-        </Card.Footer>
-      </Card>
+      {loaded && (
+        <Card>
+          <Card.Media src={product.image.url} />
+          <Card.Header>
+            <p className="text-xl">{product.name}</p>
+          </Card.Header>
+          <Card.Body>
+            <div>{product.description}</div>
+            <div>{`$${product.price / 100}`}</div>
+          </Card.Body>
+          <Card.Footer>
+            {build ? (
+              <Link to="/build" state={{ page: product.type }}>
+                Back
+              </Link>
+            ) : (
+              <button onClick={addToCart}>Add to Cart </button>
+            )}{" "}
+            | <button onClick={wishListToggle}>{wishListButtonText}</button>
+          </Card.Footer>
+        </Card>
+      )}
     </ContentWrapper.Flex>
   );
 }
