@@ -22,7 +22,7 @@ function RegisterPage() {
       name: fullName,
       email: email,
       password: password,
-      admin: true
+      admin: false
     };
     const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/users/`, {
       method: "POST",
