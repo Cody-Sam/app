@@ -45,15 +45,15 @@ function OrderIndex() {
               {orders.map((order) => {
                 let { id, colour } = readableRandom(order._id);
                 return (
-                  <tr className="border-y text-center h-8" key={order._id}>
-                    <td className="flex justify-center h-8">
+                  <tr className="border-y py-4 text-center h-16" key={order._id}>
+                    <td className="flex justify-center">
                        {id}<MdLens size="1.5em" color={colour} />
                     </td>
                     <td>{order.products.length}</td>
                     <td>{order.status}</td>
-                    <td className="flex justify-center h-8">
-                      <Link className="my-auto" to={order._id}>
-                        <MdModeEdit />
+                    <td className="flex justify-center">
+                      <Link className="h-full my-auto" to={order._id}>
+                        <MdModeEdit size="2rem"/>
                       </Link>
                     </td>
                   </tr>
