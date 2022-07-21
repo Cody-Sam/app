@@ -13,6 +13,8 @@ import {
   MdProductionQuantityLimits,
   MdAdminPanelSettings,
   MdHome,
+  MdLocalPostOffice,
+  MdStars,
 } from "react-icons/md";
 import { UserContext } from "modules/user";
 
@@ -111,6 +113,9 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
         <MenuItem name="Products" path="admin/products">
           <MdProductionQuantityLimits size="2em" />
         </MenuItem>
+        <MenuItem name="Orders" path="admin/orders">
+          <MdLocalPostOffice size="2em" />
+        </MenuItem>
       </>
     );
   }
@@ -127,9 +132,14 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
           </MenuItem>
         )}
         {!userStore.user.admin && (
-          <MenuItem name="Orders" path="orders">
-            <MdReceipt size="2em" />
-          </MenuItem>
+          <>
+            <MenuItem name="Wishlist" path="wishlist">
+              <MdStars size="2em" />
+            </MenuItem>
+            <MenuItem name="Orders" path="orders">
+              <MdReceipt size="2em" />
+            </MenuItem>
+          </>
         )}
 
         <MenuLogOut className={"pt-4"}>
