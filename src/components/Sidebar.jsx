@@ -110,6 +110,9 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
   function AdminNavLinks() {
     return (
       <>
+        <MenuItem name="Home" path="/">
+          <MdHome size="2em" />
+        </MenuItem>
         <MenuItem name="Products" path="admin/products">
           <MdProductionQuantityLimits size="2em" />
         </MenuItem>
