@@ -1,9 +1,9 @@
-import React, { useState } from "react";
+import React, { useContext, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import tw from "twin.macro";
 import { PageContainer, Button } from "../../components/StyledComponents";
-
+import { UserContext } from "modules/user";
 const CartItems = styled.div`
   ${tw`
     w-[75%]
@@ -15,6 +15,19 @@ const CartItems = styled.div`
     justify-center
     items-center
     my-5
+  `}
+`;
+
+const Text = styled.h1`
+  ${tw`
+  my-5
+    w-[17em]
+    text-center
+    mx-5
+    text-base
+    border-2
+    p-6
+    border-gray-900
   `}
 `;
 
@@ -79,6 +92,7 @@ const CartText = styled.h1`
 `;
 
 const Cart = () => {
+    const { userStore, userDispatch } = useContext(UserContext);
   const [cart, setCart] = useState(
     localStorage.cart ? JSON.parse(localStorage.cart) : []
   );
@@ -138,8 +152,12 @@ const Cart = () => {
                 <img src={cartItem.img} alt="" />
               </ImageContainer>
               <CartItemDetailsSection>{cartItem.name}</CartItemDetailsSection>
-              <CartItemDetailsSection>{cartItem.quantity}</CartItemDetailsSection>
-              <CartItemDetailsSection>{`$${Math.floor((cartItem.price / 100) * cartItem.quantity)}`}</CartItemDetailsSection>
+              <CartItemDetailsSection>
+                {cartItem.quantity}
+              </CartItemDetailsSection>
+              <CartItemDetailsSection>{`$${Math.floor(
+                (cartItem.price / 100) * cartItem.quantity
+              )}`}</CartItemDetailsSection>
               <QtyButtonContainer>
                 <QtyButtons onClick={() => increase(i)}>+</QtyButtons>
                 <QtyButtons onClick={() => decrease(i)}>-</QtyButtons>
@@ -147,7 +165,8 @@ const Cart = () => {
             </CartItems>
           );
         })}
-        <Button onClick={createCheckout}>Checkout</Button>
+        {userStore.user && <Button onClick={createCheckout}>Checkout</Button>}
+        {!userStore.user && <Text>Log in to checkout</Text>}
       </PageContainer>
     );
   } else {
