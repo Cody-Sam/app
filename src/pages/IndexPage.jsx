@@ -1,41 +1,45 @@
-import ContentWrapper from "../components/ContentWrapper";
-import GlowCard from "../components/GlowCard";
-import Card from "../components/Card";
+import GlowCard from "components/GlowCard";
+import { useContext, useEffect } from "react";
+import { Link, Navigate, useNavigate } from "react-router-dom";
+import { UserContext } from "modules/user";
+import ContentWrapper from "components/ContentWrapper";
+import { PageContainer } from "../components/StyledComponents";
+
 
 function IndexPage() {
-  let cards = [];
-  for (let i = 0; i < 20; i++) {
-    cards.push({
-      key: i,
-      src: "https://picsum.photos/400/400",
-      title: `Card Number ${i + 1}`,
-      body: "Card Body",
-      footer: "card footer",
-    });
-  }
+  const {
+    userStore: { user, token },
+    userDispatch,
+  } = useContext(UserContext);
+
+  
+
   return (
-    <>
+    <PageContainer>
+      <GlowCard>
+        <GlowCard.Body>
+          <h1 className="text-4xl text-center">PC BUILDER 9001</h1>
+        </GlowCard.Body>
+      </GlowCard>
       <ContentWrapper.Flex>
-        <GlowCard>
-          <GlowCard.Body>
-            <h1 className="text-4xl text-center">PC BUILDER 9001</h1>
-          </GlowCard.Body>
-        </GlowCard>
+        <Link to="../../shop">
+          <GlowCard>
+            {/* <GlowCard.Header /> */}
+            <GlowCard.Body>
+              <h1 className="text-4xl z-20 text-center">Start Shopping</h1>
+            </GlowCard.Body>
+          </GlowCard>
+        </Link>
+        <Link to="../../build">
+          <GlowCard>
+            {/* <GlowCard.Header /> */}
+            <GlowCard.Body>
+              <h1 className="text-4xl z-20 text-center">Build Your PC</h1>
+            </GlowCard.Body>
+          </GlowCard>
+        </Link>
       </ContentWrapper.Flex>
-      <ContentWrapper.Grid>
-        {cards.map((card) => {
-          return (
-            <Card key={card.key}>
-              <Card.Media src={card.src} />
-              <Card.Header>{card.title}</Card.Header>
-              <Card.Body>{card.body}</Card.Body>
-              <Card.Footer>{card.footer}</Card.Footer>
-            </Card>
-          );
-        })}
-      </ContentWrapper.Grid>
-    </>
+    </PageContainer>
   );
 }
-
 export default IndexPage;
