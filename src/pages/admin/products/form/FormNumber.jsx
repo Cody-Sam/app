@@ -3,7 +3,7 @@ function FormNumber({ name, value, onChange }) {
     <input
       className="w-full h-6 bg-black ring rounded"
       name={name}
-      value={value}
+      value={Number(value)}
       type="number"
       onChange={(event) => onChange(Number(event.target.value))}
     ></input>
