@@ -2,6 +2,7 @@ import Card from "../../components/Card";
 import { useState, useEffect } from "react";
 import { Link } from "react-router-dom";
 import ContentWrapper from "../../components/ContentWrapper";
+import { PageContainer } from "../../components/StyledComponents";
 
 function ShopIndex() {
   let [products, setProducts] = useState([]);
@@ -14,7 +15,7 @@ function ShopIndex() {
     fetchData();
   }, []);
 
-  return (
+  return products.length > 0 ? (
     <ContentWrapper.Grid>
       {products.map((product) => {
         return (
@@ -31,6 +32,8 @@ function ShopIndex() {
         );
       })}
     </ContentWrapper.Grid>
-  );
+  ) : (
+      <PageContainer>LOADING...</PageContainer>
+  )
 }
 export default ShopIndex;
