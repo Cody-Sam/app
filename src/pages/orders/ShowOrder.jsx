@@ -68,6 +68,7 @@ const Button = styled.button`
         rounded
         ease-in-out
         duration-200
+        m-5
     `}
 `;
 

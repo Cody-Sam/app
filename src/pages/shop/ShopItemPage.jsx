@@ -5,18 +5,6 @@ import ContentWrapper from "components/ContentWrapper";
 import styled from "styled-components";
 import tw from "twin.macro";
 
-const Button = styled.button`
-  ${tw`
-        bg-blue-500 
-        hover:bg-blue-700 
-        text-white 
-        font-bold 
-        py-2 
-        px-4 
-        rounded
-    `}
-`;
-
 function ShopItemPage({ build = false }) {
   const [product, setProduct] = useState({});
   const [loaded, setLoaded] = useState(false);

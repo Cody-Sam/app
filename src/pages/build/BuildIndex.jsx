@@ -29,6 +29,8 @@ function BuildIndex() {
     fetchData();
   }, []);
 
+  console.log(build)
+
   function Page() {
     switch (page) {
       default:

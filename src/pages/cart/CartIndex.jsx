@@ -2,18 +2,8 @@ import React, { useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import tw from "twin.macro";
+import { PageContainer, Button } from "../../components/StyledComponents";
 
-const CartContainer = styled.div`
-  ${tw`
-    h-[75%]
-    w-full
-    flex
-    items-center
-    justify-center
-    flex-col
-    my-24
-  `}
-`;
 const CartItems = styled.div`
   ${tw`
     w-[75%]
@@ -61,19 +51,7 @@ const QtyButtonContainer = styled.div`
   `}
 `;
 
-const Button = styled.button`
-  ${tw`
-        bg-gray-900
-        hover:bg-red-900
-        text-white 
-        font-bold 
-        py-4 
-        px-8 
-        rounded
-        ease-in-out
-        duration-200
-    `}
-`;
+
 
 const QtyButtons = styled.button`
   ${tw`
@@ -152,7 +130,7 @@ const Cart = () => {
   
   if (cart.length > 0) {
     return (
-      <CartContainer>
+      <PageContainer>
         {cart.map((cartItem, i) => {
           return (
             <CartItems key={i}>
@@ -170,16 +148,16 @@ const Cart = () => {
           );
         })}
         <Button onClick={createCheckout}>Checkout</Button>
-      </CartContainer>
+      </PageContainer>
     );
   } else {
     return (
-      <CartContainer>
+      <PageContainer>
         <CartText>Cart Empty</CartText>
         <Link to="../../shop">
           <Button className="mt-5">Start Shopping</Button>
         </Link>
-      </CartContainer>
+      </PageContainer>
     );
   }
 };

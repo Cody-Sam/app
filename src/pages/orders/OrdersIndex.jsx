@@ -4,6 +4,7 @@ import styled from "styled-components";
 import tw from "twin.macro";
 import ShowOrder from "./ShowOrder";
 import format from "date-fns/format";
+import { Button } from "../../components/StyledComponents";
 
 const PageContainer = styled.div`
   ${tw`
@@ -35,20 +36,6 @@ const Items = styled.div`
     p-6
     border-gray-900
   `}
-`;
-
-const Button = styled.button`
-  ${tw`
-        bg-gray-900
-        hover:bg-red-900
-        text-white 
-        font-bold 
-        py-4 
-        px-8 
-        rounded
-        ease-in-out
-        duration-200
-    `}
 `;
 
 

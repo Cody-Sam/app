@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import { Link } from "react-router-dom";
 import styled from "styled-components";
 import tw from "twin.macro";
+import { Button } from "../../components/StyledComponents";
 
 const PageContainer = styled.div`
   ${tw`
@@ -43,20 +44,6 @@ const ImageContainer = styled.div`
       w-36
     `}
   }
-`;
-
-const Button = styled.button`
-  ${tw`
-        bg-gray-900
-        hover:bg-red-900
-        text-white 
-        font-bold 
-        py-4 
-        px-8 
-        rounded
-        ease-in-out
-        duration-200
-    `}
 `;
 
 const Text = styled.h1`
