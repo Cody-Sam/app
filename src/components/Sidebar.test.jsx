@@ -1,5 +1,5 @@
 import { describe, expect, test } from "vitest";
-import { fireEvent, getByTitle, render, screen } from "@testing-library/react";
+import { fireEvent, render, screen } from "@testing-library/react";
 import { BrowserRouter, Routes, Route } from "react-router-dom";
 import { UserContext } from "modules/user";
 import Sidebar from "./Sidebar";
@@ -108,9 +108,7 @@ describe("Sidebar", () => {
     let sidebarOpen = true;
     let setSidebarOpen = (value) => (sidebarOpen = value);
     let dispatchResult = {};
-    console.log("yeet")
     const dispatch = (value) => {
-      console.log(value)
       dispatchResult = value;
     };
     
