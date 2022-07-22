@@ -8,7 +8,7 @@ export default defineConfig({
     alias: {
       components: path.resolve("src/components"),
       pages: path.resolve("src/pages"),
-      modules: path.resolve("src/modules")
+      modules: path.resolve("src/modules"),
     },
   },
   plugins: [
@@ -18,4 +18,8 @@ export default defineConfig({
       },
     }),
   ],
+  test: {
+    globals: true,
+    environment: "jsdom",
+  },
 });

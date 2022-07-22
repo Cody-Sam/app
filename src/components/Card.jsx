@@ -1,6 +1,9 @@
-function Card({ padding=8, children }) {
+function Card({ padding = 8, children }) {
   children = Array.isArray(children) ? children : [children];
   children = children.filter((element) => element !== undefined);
+  children = children.filter((element) =>
+    element.hasOwnProperty("type") && element.type.hasOwnProperty("displayName")
+  );
 
   const header =
     children.find((child) => child.type.displayName === "header") || null;
@@ -14,7 +17,11 @@ function Card({ padding=8, children }) {
   return (
     <div className="bg-black ring ring-white rounded-lg flex flex-col md:flex-row overflow-hidden">
       {media && <div className="h-64 w-auto">{media}</div>}
-      <div className={`w-full py-${padding/2} px-${padding} flex flex-col justify-between`}>
+      <div
+        className={`w-full py-${
+          padding / 2
+        } px-${padding} flex flex-col justify-between`}
+      >
         {header && <div className="h-full border-b">{header}</div>}
         <div className="">{body}</div>
         {footer && <div className="border-t">{footer}</div>}
@@ -41,11 +48,12 @@ function Footer({ children }) {
 Footer.displayName = "footer";
 Card.Footer = Footer;
 
-function Media({ src }) {
+function Media({ src, alt }) {
   if (src) {
     return (
       <img
         src={src}
+        alt={alt}
         className="inset-0 h-full w-full object-cover object-center"
       />
     );
