@@ -6,6 +6,7 @@ function Admin() {
   return <AdminIndex />;
 }
 
+Admin.Index = AdminIndex;
 Admin.Products = Products;
 Admin.Orders = Orders;
 

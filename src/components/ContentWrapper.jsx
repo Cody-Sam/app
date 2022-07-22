@@ -7,8 +7,9 @@ function PageWrapper({ onClick, focus, children }) {
     <>
       {!focus && (
         <div
+          data-testid="overlay"
           onClick={onClick}
-          className="absolute left-12 right-0 top-0 bottom-0 overflow-x-hidden bg-black/70 blur-sm z-40"
+          className="contentOverlay absolute left-12 right-0 top-0 bottom-0 overflow-x-hidden bg-black/70 blur-sm z-40"
         ></div>
       )}
       <div className="absolute left-12 right-0 top-12 bottom-0 overflow-x-hidden z-20">

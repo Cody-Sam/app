@@ -18,12 +18,12 @@ import {
 } from "react-icons/md";
 import { UserContext } from "modules/user";
 
-function Sidebar({ sidebarOpen, setSidebarOpen }) {
+function Sidebar({ sidebarOpen, setSidebarOpen, adminOveride }) {
   const { userStore, userDispatch } = useContext(UserContext);
   const location = useLocation();
   const navigate = useNavigate();
 
-  const admin = location.pathname.split("/")[1] == "admin";
+  const admin = adminOveride || location.pathname.split("/")[1] == "admin";
 
   function MenuItem({ name, children, path }) {
     return (
@@ -51,8 +51,9 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
           }}
         >
           {children}
+          {sidebarOpen && <span className="pl-2 my-auto">Log Out</span>}
         </button>
-        {sidebarOpen && <span className="pl-2 my-auto">Log Out</span>}
+        
       </div>
     );
   }
@@ -61,6 +62,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
     return (
       <div className="flex">
         <button
+          title="sidebar-toggle"
           onClick={(e) => {
             setSidebarOpen(!sidebarOpen);
           }}
@@ -111,7 +113,7 @@ function Sidebar({ sidebarOpen, setSidebarOpen }) {
     return (
       <>
         <MenuItem name="Home" path="/">
-          <MdHome size="2em" />
+          <MdHome size="2em" alt="Admin Home"/>
         </MenuItem>
         <MenuItem name="Products" path="admin/products">
           <MdProductionQuantityLimits size="2em" />

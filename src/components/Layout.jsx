@@ -7,7 +7,7 @@ import TopBar from "components/TopBar";
 function Layout() {
   let [sidebarOpen, setSidebarOpen] = useState(false);
   return (
-    <div className="relative min-h-screen text-white">
+    <div data-testid="app" className="relative min-h-screen text-white">
       <div className="relative flex h-screen bg-black">
         <Sidebar sidebarOpen={sidebarOpen} setSidebarOpen={setSidebarOpen} />
         <TopBar sidebarOpen={sidebarOpen} />

@@ -24,6 +24,12 @@ function GlowCard({ children }) {
   });
   children = Array.isArray(children) ? children : [children];
   children = children.filter((element) => element !== undefined);
+  children = children.filter(
+    (element) =>
+      element.hasOwnProperty("type") &&
+      element.type.hasOwnProperty("displayName")
+  );
+
   const header =
     children.find((child) => child.type.displayName === "header") || null;
   const body =
@@ -97,11 +103,12 @@ function Footer({ children }) {
 Footer.displayName = "footer";
 GlowCard.Footer = Footer;
 
-function Media({ src }) {
+function Media({ src, alt }) {
   if (src) {
     return (
       <img
         src={src}
+        alt={alt}
         className="inset-0 h-full w-full object-cover object-center"
       />
     );

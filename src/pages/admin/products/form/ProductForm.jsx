@@ -61,7 +61,6 @@ function ProductForm({ product, method, setFormState }) {
       quantity: quantity,
       image: method == "PUT" ? product.image : image,
     };
-    console.log(productData);
     const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/products`, {
       method: method,
       headers: {
@@ -70,12 +69,10 @@ function ProductForm({ product, method, setFormState }) {
       },
       body: JSON.stringify(productData),
     });
-    console.log(res.status);
     const data = await res.json();
     setFormState("unsent");
     if (res.status === 201) {
       const url = data.url.split("/").splice(-1);
-      console.log(url);
       const prompt = window.confirm(
         "Would you like to go to this items shop page?"
       );
