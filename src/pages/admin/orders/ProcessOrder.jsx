@@ -23,7 +23,7 @@ function ProcessOrder() {
         }
       );
       const data = await res.json();
-      setOrder(data[0]);
+      setOrder(data);
       setLoaded(true);
     }
     fetchData();
@@ -43,7 +43,6 @@ function ProcessOrder() {
         body: JSON.stringify(order),
       }
     );
-    console.log(res);
     const data = await res.json();
   }
 

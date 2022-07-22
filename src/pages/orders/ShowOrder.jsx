@@ -1,9 +1,9 @@
-import React, { useEffect, useState } from 'react'
-import { Link, useParams } from 'react-router-dom'
-import styled from 'styled-components';
-import tw from 'twin.macro';
+import React, { useEffect, useState } from "react";
+import { Link, useParams } from "react-router-dom";
+import styled from "styled-components";
+import tw from "twin.macro";
 import format from "date-fns/format";
-import ReviewItem from './ReviewItem'
+import ReviewItem from "./ReviewItem";
 
 const PageContainer = styled.div`
   ${tw`
@@ -72,74 +72,71 @@ const Button = styled.button`
 `;
 
 const ShowOrder = () => {
+  const [order, setOrder] = useState();
+  const [loaded, setLoaded] = useState(false);
 
-    const [order, setOrder] = useState()
+  const { id } = useParams();
 
-    const { id } = useParams()
-    
-    const getOrder = async () => {
-      const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/orders/${id}`, {
-        method: "GET",
-        headers: {
-          "Content-Type": "application/json",
-          authorization: `Bearer ${sessionStorage.token}`,
-        },
-      });
-      const ordersRes = await res.json();
-      setOrder(ordersRes);
-    };
+  const getOrder = async () => {
+    const res = await fetch(`${import.meta.env.VITE_SERVER_URL}/orders/${id}`, {
+      method: "GET",
+      headers: {
+        "Content-Type": "application/json",
+        authorization: `Bearer ${sessionStorage.token}`,
+      },
+    });
+    const ordersRes = await res.json();
+    setOrder(ordersRes);
+    setLoaded(true);
+  };
 
+  const [showReview, setShowReview] = useState([false, 0]);
 
-    
-    const [showReview, setShowReview] = useState([false, 0])
+  const [dateStr, setDateStr] = useState("");
 
-    
-    const [dateStr, setDateStr] = useState("");
-    
-    const buildDateStr = async () => {
-      const orderDate = order.createdAt;
-      const str = format(new Date(orderDate), "dd.MM.yyyy");
-      setDateStr(str);
-    };
-  
-    useEffect(() => {
-      getOrder();
-      setDateStr()
-    }, []);
-    
-useEffect(() => {
-  buildDateStr();
-}, [order]);
+  const buildDateStr = async () => {
+    const orderDate = order.createdAt;
+    const str = format(new Date(orderDate), "dd.MM.yyyy");
+    setDateStr(str);
+  };
 
+  useEffect(() => {
+    getOrder();
+    setDateStr();
+  }, []);
 
-    return (
-      order && (
-        <PageContainer>
-          <OrderContainer>
-            <Text>{order._id}</Text>
-            <Text>{dateStr}</Text>
-            <Items>
-              {order.products.map((product, i) => {
-                return (
-                  <div className="flex flex-col md:flex-row" key={i}>
-                    <Text>
-                      {product.name} | ${product.price / 100}
-                    </Text>
-                    <Button onClick={() => setShowReview([!showReview[0], i])}>
-                      Review This Product
-                    </Button>
-                    {showReview[0] && showReview[1] == i && (
-                      <ReviewItem product={product} />
-                    )}
-                  </div>
-                );
-              })}
-            </Items>
-            <Text>${order.total}</Text>
-          </OrderContainer>
-        </PageContainer>
-      )
-    );
-}
+  useEffect(() => {
+    buildDateStr();
+  }, [order]);
 
-export default ShowOrder
+  return (
+    loaded && (
+      <PageContainer>
+        <OrderContainer>
+          <Text>{order._id}</Text>
+          <Text>{dateStr}</Text>
+          <Items>
+            {order.products.map((product, i) => {
+              return (
+                <div className="flex flex-col md:flex-row" key={i}>
+                  <Text>
+                    {product.name} | ${product.price / 100}
+                  </Text>
+                  <Button onClick={() => setShowReview([!showReview[0], i])}>
+                    Review This Product
+                  </Button>
+                  {showReview[0] && showReview[1] == i && (
+                    <ReviewItem product={product} />
+                  )}
+                </div>
+              );
+            })}
+          </Items>
+          <Text>${order.total/100}</Text>
+        </OrderContainer>
+      </PageContainer>
+    )
+  );
+};
+
+export default ShowOrder;

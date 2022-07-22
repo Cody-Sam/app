@@ -16,7 +16,6 @@ function OrderIndex() {
       });
 
       const data = await res.json();
-      console.log(data);
       const unprocessedOrders = data.filter(
         (order) => order.status === "unfulfilled"
       );
