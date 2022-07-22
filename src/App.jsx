@@ -86,7 +86,7 @@ function App() {
 
                 <Route path="orders">
                   <Route index element={<Admin.Orders />} />
-                  <Route path=":order" element={<Admin.Orders.Process />} />
+                  <Route path=":orderID" element={<Admin.Orders.Process />} />
                 </Route>
               </Route>
 
