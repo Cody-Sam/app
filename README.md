@@ -6,6 +6,10 @@ Clone this repo and run `npm i`
 `npm run` will start the dev server
 `npm test` will run the Vitest test suite
 
+## Testing Stats
+
+[Testing Stats](https://cody-sam.github.io/app/coverage)
+
 ## Application Patterns
 
 ### Resolved Paths
