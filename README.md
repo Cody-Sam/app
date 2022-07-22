@@ -93,8 +93,16 @@ To protect an individual route wrap the desired page component with the required
 To protect a group of routes use the ProtectedRoute component as the element in the root route
 
 ```js
-
-<Route path="root" element={<ProtectedRoute.Admin />}>
-  <Route index element={<AdminIndex />}>
-  <Route path="another_page" element={<Admin.AnotherPage />}/>
+<Router>
+  <Routes>
+    ...
+    ...
+    <Route path="root" element={<ProtectedRoute.Admin />}>
+      <Route index element={<AdminIndex />}>
+      <Route path="another_page" element={<Admin.AnotherPage />}/>
+    </Route>
+    ...
+    ...
+  </Routes>
+<Router>
 ```
