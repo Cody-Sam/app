@@ -6,9 +6,13 @@ Clone this repo and run `npm i`
 `npm run` will start the dev server
 `npm test` will run the Vitest test suite
 
-## Testing Stats
+## Relevant Links
 
-[Testing Stats](https://cody-sam.github.io/app/coverage)
+- [Testing Stats](https://cody-sam.github.io/app/coverage)
+- [API Repository](https://github.com/cody-sam/api/)
+- [Project Repository](https://github.com/cody-sam/T2A2)
+
+
 
 ## Application Patterns
 
