@@ -6,7 +6,7 @@ Clone this repo and run `npm i`
 `npm run` will start the dev server
 `npm test` will run the Vitest test suite
 
-## Application Framework
+## Application Patterns
 
 ### Resolved Paths
 
